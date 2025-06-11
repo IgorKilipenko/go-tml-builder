@@ -11,9 +11,23 @@ type Rule struct {
 	BeginCaptures map[string]Capture `json:"beginCaptures,omitempty"`
 	EndCaptures   map[string]Capture `json:"endCaptures,omitempty"`
 	ContentName   string             `json:"contentName,omitempty"`
+	Include       RepositoryKey      `json:"include,omitempty"`
 }
 
 type Capture struct {
 	Name     string  `json:"name,omitempty"`
 	Patterns []*Rule `json:"patterns,omitempty"`
+}
+
+type Grammar struct {
+	ScopeName  string     `json:"scopeName"`
+	FileTypes  []string   `json:"fileTypes,omitempty"`
+	Name       string     `json:"name"`
+	Patterns   []*Rule    `json:"patterns"`
+	Repository Repository `json:"repository"`
+}
+
+type GrammarProvider interface {
+    GetRepository() Repository
+    GetMainRules() []*Rule
 }

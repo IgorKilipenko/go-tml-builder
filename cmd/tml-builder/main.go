@@ -4,19 +4,14 @@ import (
 	"log"
 
 	"github.com/IgorKilipenko/go-tml-builder/internal/core/generator"
-	"github.com/IgorKilipenko/go-tml-builder/internal/core/models"
+	providers "github.com/IgorKilipenko/go-tml-builder/internal/providers/bsl/v8"
 )
 
 func main() {
-	grammar := generator.GenerateBSLGrammar()
-
-	// Добавляем правила
-	grammar.Patterns = append(grammar.Patterns, &models.Rule{
-		Match: `\b(Процедура|Функция)\b`,
-		Name:  "keyword.control.bsl",
-	})
-
-	// ... другие правила
+	provider := providers.NewProvider()
+	builder := generator.NewGrammarBuilder()
+	builder.AddRules(provider.GetMainRules()).SetRepository(provider.GetRepository())
+	grammar := builder.Build()
 
 	err := generator.SaveGrammarToFile(grammar, "bsl.tmLanguage.json")
 	if err != nil {
