@@ -2,14 +2,16 @@ package main
 
 import (
 	"log"
-	"github.com/IgorKilipenko/go-tml-builder"
+
+	"github.com/IgorKilipenko/go-tml-builder/internal/core/generator"
+	"github.com/IgorKilipenko/go-tml-builder/internal/core/models"
 )
 
 func main() {
 	grammar := generator.GenerateBSLGrammar()
 
-	// Добавляем правила (можно вынести в отдельный пакет)
-	grammar.Patterns = append(grammar.Patterns, &generator.Rule{
+	// Добавляем правила
+	grammar.Patterns = append(grammar.Patterns, &models.Rule{
 		Match: `\b(Процедура|Функция)\b`,
 		Name:  "keyword.control.bsl",
 	})

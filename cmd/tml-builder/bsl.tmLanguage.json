@@ -1,0 +1,15 @@
+{
+  "scopeName": "source.bsl",
+  "fileTypes": [
+    "bsl",
+    "os"
+  ],
+  "name": "1C (BSL)",
+  "patterns": [
+    {
+      "name": "keyword.control.bsl",
+      "match": "\\b(Процедура|Функция)\\b"
+    }
+  ],
+  "repository": {}
+}

@@ -1,29 +1,44 @@
 package generator
 
-type Repository map[string]*Rule
+import (
+	"encoding/json"
+	"os"
 
-type Rule struct {
-	Name          string             `json:"name,omitempty"`
-	Match         string             `json:"match,omitempty"`
-	Begin         string             `json:"begin,omitempty"`
-	End           string             `json:"end,omitempty"`
-	While         string             `json:"while,omitempty"`
-	Patterns      []*Rule            `json:"patterns,omitempty"`
-	Captures      map[string]Capture `json:"captures,omitempty"`
-	BeginCaptures map[string]Capture `json:"beginCaptures,omitempty"`
-	EndCaptures   map[string]Capture `json:"endCaptures,omitempty"`
-	ContentName   string             `json:"contentName,omitempty"`
-}
+	"github.com/IgorKilipenko/go-tml-builder/internal/core/models"
+)
 
-type Capture struct {
-	Name     string  `json:"name,omitempty"`
-	Patterns []*Rule `json:"patterns,omitempty"`
-}
+type Repository map[string]*models.Rule
 
 type Grammar struct {
-	ScopeName  string     `json:"scopeName"`
-	FileTypes  []string   `json:"fileTypes"`
-	Name       string     `json:"name"`
-	Patterns   []*Rule    `json:"patterns"`
-	Repository Repository `json:"repository"`
+	ScopeName  string         `json:"scopeName"`
+	FileTypes  []string       `json:"fileTypes"`
+	Name       string         `json:"name"`
+	Patterns   []*models.Rule `json:"patterns"`
+	Repository Repository     `json:"repository"`
+}
+
+func GenerateBSLGrammar() *Grammar {
+	return &Grammar{
+		ScopeName: "source.bsl",
+		FileTypes: []string{"bsl", "os"},
+		Name:      "1C:Community (BSL)",
+		Patterns:  []*models.Rule{
+			// Здесь будут основные правила
+		},
+		Repository: Repository{
+			// Здесь будут дополнительные правила
+		},
+	}
+}
+
+func SaveGrammarToFile(grammar *Grammar, filename string) error {
+	file, err := os.Create(filename)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	encoder := json.NewEncoder(file)
+	encoder.SetIndent("", "  ")
+	return encoder.Encode(grammar)
 }
