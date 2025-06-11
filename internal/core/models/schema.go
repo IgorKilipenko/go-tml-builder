@@ -1,6 +1,7 @@
 package models
 
 type Rule struct {
+	Key           RepositoryKey      `json:"-"`
 	Name          string             `json:"name,omitempty"`
 	Match         string             `json:"match,omitempty"`
 	Begin         string             `json:"begin,omitempty"`
@@ -28,6 +29,6 @@ type Grammar struct {
 }
 
 type GrammarProvider interface {
-    GetRepository() Repository
-    GetMainRules() []*Rule
+	GetRepository() Repository
+	GetMainRules() []*Rule
 }

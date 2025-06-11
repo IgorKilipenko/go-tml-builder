@@ -1,8 +1,13 @@
 package models
 
 import (
+	"fmt"
 	"log"
 )
+
+type RepositoryKeyRef interface {
+	IncludeRef() *Rule
+}
 
 // RepositoryKey - типизированный ключ для репозитория
 type RepositoryKey string
@@ -57,6 +62,27 @@ func Validate(repo Repository) error {
 		// 	return fmt.Errorf("invalid rule '%s': %v", key, err)
 		// }
 	}
+	return nil
+}
+
+// MarshalJSON добавляет префикс # при сериализации
+func (k RepositoryKey) MarshalJSON() ([]byte, error) {
+	if k == "" {
+		return []byte(`""`), nil
+	}
+	return []byte(fmt.Sprintf(`"#%s"`, k)), nil
+}
+
+// UnmarshalJSON удаляет префикс # при десериализации
+func (k *RepositoryKey) UnmarshalJSON(data []byte) error {
+	s := string(data)
+	if len(s) > 0 && s[0] == '"' {
+		s = s[1 : len(s)-1] // Убираем кавычки
+	}
+	if len(s) > 0 && s[0] == '#' {
+		s = s[1:] // Убираем #
+	}
+	*k = RepositoryKey(s)
 	return nil
 }
 
