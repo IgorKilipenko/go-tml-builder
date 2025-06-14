@@ -4,7 +4,7 @@ import (
 	"log"
 
 	"github.com/IgorKilipenko/go-tml-builder/internal/core/generator"
-	providers "github.com/IgorKilipenko/go-tml-builder/internal/providers/bsl/v8"
+	providers "github.com/IgorKilipenko/go-tml-builder/internal/providers/bsl"
 )
 
 func main() {

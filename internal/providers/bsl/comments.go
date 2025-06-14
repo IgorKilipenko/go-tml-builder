@@ -1,4 +1,4 @@
-package v8
+package bsl
 
 import "github.com/IgorKilipenko/go-tml-builder/internal/core/models"
 

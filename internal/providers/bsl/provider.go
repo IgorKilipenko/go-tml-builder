@@ -1,17 +1,17 @@
-package v8
+package bsl
 
 import (
 	"github.com/IgorKilipenko/go-tml-builder/internal/core/models"
-	rs "github.com/IgorKilipenko/go-tml-builder/internal/providers/bsl/v8/rules"
+	rs "github.com/IgorKilipenko/go-tml-builder/internal/providers/bsl/rules"
 )
 
-type BSLv8Provider struct{}
+type BSLProvider struct{}
 
-func NewProvider() *BSLv8Provider {
-	return &BSLv8Provider{}
+func NewProvider() *BSLProvider {
+	return &BSLProvider{}
 }
 
-func (p *BSLv8Provider) GetMainRules() []*models.Rule {
+func (p *BSLProvider) GetMainRules() []*models.Rule {
 	// var rules []*models.Rule
 
 	// // Собираем все правила
@@ -28,7 +28,7 @@ func (p *BSLv8Provider) GetMainRules() []*models.Rule {
 	return rules
 }
 
-func (p *BSLv8Provider) GetRepository() models.Repository {
+func (p *BSLProvider) GetRepository() models.Repository {
 	repo := make(models.Repository)
 
 	// Стандартные правила
