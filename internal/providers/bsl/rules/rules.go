@@ -24,7 +24,7 @@ func BasicWithDefPatterns() *models.Rule {
 		bslm.KeyQuotedString.IncludeRef(),
 		{ // keyword literals, like: Неопределено
 			Name: "constant.language.bsl",
-			Match: fmt.Sprintf("(?i:(?<=[^\\wа-яё\\.]|^)(%s)(?=[^\\wа-яё\\.]|$))",
+			Match: fmt.Sprintf(`(?i:(?<=[^\wа-яё\.]|^)(%s)(?=[^\wа-яё\.]|$))`,
 				exprutils.ExpressionOrFunc(bslm.AllConstants(), nil)),
 		},
 		{ // numerics literals
