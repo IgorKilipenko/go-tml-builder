@@ -15,12 +15,9 @@ func NewBasicWithDefPatterns() *models.Rule {
 			Begin: "//",
 			End:   "$",
 		},
-		{
-			Include: KeyStringWithSingleValue,
-		},
-		{
-			Include: "stringSupportValues",
-		},
+		KeyStringWithSingleValue.IncludeRef(),
+		KeyStringSupportValues.IncludeRef(),
+		KeyQuotedString.IncludeRef(),
 		{ // keyword literals, like: Неопределено
 			Name:  "constant.language.bsl",
 			Match: "(?i:(?<=[^\\wа-яё\\.]|^)(Неопределено|Истина|Ложь)(?=[^\\wа-яё\\.]|$))",
@@ -45,6 +42,7 @@ func NewBasicWithDefPatterns() *models.Rule {
 			Name:  "punctuation.bracket.end.bsl",
 			Match: "(\\))",
 		},
+		KeyExtensionRegions.IncludeRef(),
 	}
 
 	return NewBasic(patterns)

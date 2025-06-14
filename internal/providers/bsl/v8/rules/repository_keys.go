@@ -7,4 +7,7 @@ const (
 	KeyMiscellaneous models.RepositoryKey = "miscellaneous"
 
 	KeyStringWithSingleValue models.RepositoryKey = "stringWithSingleSupportValue"
+	KeyStringSupportValues models.RepositoryKey = "stringSupportValues"
+	KeyQuotedString models.RepositoryKey = "quotedString"
+	KeyExtensionRegions models.RepositoryKey = "extensionRegions"
 )
