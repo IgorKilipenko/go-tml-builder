@@ -1,4 +1,4 @@
-package bsl
+package rules
 
 import "github.com/IgorKilipenko/go-tml-builder/internal/core/models"
 

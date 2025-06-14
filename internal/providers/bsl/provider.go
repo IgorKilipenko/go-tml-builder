@@ -2,16 +2,17 @@ package bsl
 
 import (
 	"github.com/IgorKilipenko/go-tml-builder/internal/core/models"
-	rs "github.com/IgorKilipenko/go-tml-builder/internal/providers/bsl/rules"
+	bslModels "github.com/IgorKilipenko/go-tml-builder/internal/providers/bsl/models"
+	bslRules "github.com/IgorKilipenko/go-tml-builder/internal/providers/bsl/rules"
 )
 
-type BSLProvider struct{}
+type BslProvider struct{}
 
-func NewProvider() *BSLProvider {
-	return &BSLProvider{}
+func NewProvider() *BslProvider {
+	return &BslProvider{}
 }
 
-func (p *BSLProvider) GetMainRules() []*models.Rule {
+func (p *BslProvider) GetMainRules() []*models.Rule {
 	// var rules []*models.Rule
 
 	// // Собираем все правила
@@ -21,21 +22,21 @@ func (p *BSLProvider) GetMainRules() []*models.Rule {
 	// rules = append(rules, FunctionRules()...)
 
 	rules := []*models.Rule{
-		rs.KeyBasic.IncludeRef(),
-		rs.KeyMiscellaneous.IncludeRef(),
+		bslModels.KeyBasic.IncludeRef(),
+		bslModels.KeyMiscellaneous.IncludeRef(),
 	}
 
 	return rules
 }
 
-func (p *BSLProvider) GetRepository() models.Repository {
+func (p *BslProvider) GetRepository() models.Repository {
 	repo := make(models.Repository)
 
 	// Стандартные правила
-	rule := rs.NewBasicWithDefPatterns()
+	rule := bslRules.BasicWithDefPatterns()
 	repo[rule.Key] = rule
 
-	rule = rs.NewMiscellaneousWithDefPatterns()
+	rule = bslRules.MiscellaneousWithDefPatterns()
 	repo[rule.Key] = rule
 
 	return repo

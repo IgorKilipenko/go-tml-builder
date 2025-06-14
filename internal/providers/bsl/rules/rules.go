@@ -1,26 +1,31 @@
 package rules
 
 import (
+	"fmt"
+
 	"github.com/IgorKilipenko/go-tml-builder/internal/core/models"
+	bslm "github.com/IgorKilipenko/go-tml-builder/internal/providers/bsl/models"
+	"github.com/IgorKilipenko/go-tml-builder/internal/utils/exprutils"
 )
 
-func NewBasic(patterns []*models.Rule) *models.Rule {
-	return newRule(KeyBasic, patterns)
+func Basic(patterns []*models.Rule) *models.Rule {
+	return newRule(bslm.KeyBasic, patterns)
 }
 
-func NewBasicWithDefPatterns() *models.Rule {
+func BasicWithDefPatterns() *models.Rule {
 	patterns := []*models.Rule{
 		{ // comments (single line)
 			Name:  "comment.line.double-slash.bsl",
 			Begin: "//",
 			End:   "$",
 		},
-		KeyStringWithSingleValue.IncludeRef(),
-		KeyStringSupportValues.IncludeRef(),
-		KeyQuotedString.IncludeRef(),
+		bslm.KeyStringWithSingleValue.IncludeRef(),
+		bslm.KeyStringSupportValues.IncludeRef(),
+		bslm.KeyQuotedString.IncludeRef(),
 		{ // keyword literals, like: Неопределено
-			Name:  "constant.language.bsl",
-			Match: "(?i:(?<=[^\\wа-яё\\.]|^)(Неопределено|Истина|Ложь)(?=[^\\wа-яё\\.]|$))",
+			Name: "constant.language.bsl",
+			Match: fmt.Sprintf("(?i:(?<=[^\\wа-яё\\.]|^)(%s)(?=[^\\wа-яё\\.]|$))",
+				exprutils.ExpressionOrFunc(bslm.AllConstants(), nil)),
 		},
 		{ // numerics literals
 			Name:  "constant.numeric.bsl",
@@ -42,17 +47,17 @@ func NewBasicWithDefPatterns() *models.Rule {
 			Name:  "punctuation.bracket.end.bsl",
 			Match: "(\\))",
 		},
-		KeyExtensionRegions.IncludeRef(),
+		bslm.KeyExtensionRegions.IncludeRef(),
 	}
 
-	return NewBasic(patterns)
+	return Basic(patterns)
 }
 
-func NewMiscellaneous(patterns []*models.Rule) *models.Rule {
-	return newRule(KeyMiscellaneous, patterns)
+func Miscellaneous(patterns []*models.Rule) *models.Rule {
+	return newRule(bslm.KeyMiscellaneous, patterns)
 }
 
-func NewMiscellaneousWithDefPatterns() *models.Rule {
+func MiscellaneousWithDefPatterns() *models.Rule {
 	patterns := []*models.Rule{
 		{
 			Include: "keywordOperators",
@@ -77,7 +82,7 @@ func NewMiscellaneousWithDefPatterns() *models.Rule {
 		},
 	}
 
-	return NewMiscellaneous(patterns)
+	return Miscellaneous(patterns)
 }
 
 func newRule(key models.RepositoryKey, patterns []*models.Rule) *models.Rule {

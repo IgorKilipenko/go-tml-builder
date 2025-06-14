@@ -1,4 +1,4 @@
-package rules
+package models
 
 import "github.com/IgorKilipenko/go-tml-builder/internal/core/models"
 
