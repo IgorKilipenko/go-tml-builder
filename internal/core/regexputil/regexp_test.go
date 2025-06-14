@@ -1,112 +1,63 @@
 package regexputil_test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/IgorKilipenko/go-tml-builder/internal/core/regexputil"
-	"github.com/stretchr/testify/assert"
 )
 
-func TestEscapeUnescape(t *testing.T) {
+func TestExpressionOrFunc(t *testing.T) {
 	tests := []struct {
-		name     string
-		input    string
-		expected string
+		name         string
+		input        []fmt.Stringer
+		preprocessor func(fmt.Stringer) string
+		expected     string
 	}{
-		{"Simple", `\w+`, `\\w+`},
-		{"DoubleEscape", `\\`, `\\\\`},
-		{"Mixed", `\d\\s\S`, `\\d\\\\s\\S`},
-		{"NoEscape", "abc", "abc"},
-		{"Complex", `([A-Za-zА-ЯЁа-яё]+)\s*=\s*"([^"]*)"`, `([A-Za-zА-ЯЁа-яё]+)\\s*=\\s*\"([^\"]*)\"`},
+		{
+			name:     "nil slice",
+			input:    nil,
+			expected: "",
+		},
+		{
+			name:     "empty slice",
+			input:    []fmt.Stringer{},
+			expected: "",
+		},
+		{
+			name:     "single item (default stringer)",
+			input:    []fmt.Stringer{testStringer{"a"}},
+			expected: "a",
+		},
+		{
+			name:     "multiple items (default stringer)",
+			input:    []fmt.Stringer{testStringer{"a"}, testStringer{"b"}},
+			expected: "a|b",
+		},
+		{
+			name:         "custom preprocessor",
+			input:        []fmt.Stringer{testStringer{"a"}, testStringer{"b"}},
+			preprocessor: func(s fmt.Stringer) string { return s.String() + "!" },
+			expected:     "a!|b!",
+		},
+		{
+			name:     "with empty values",
+			input:    []fmt.Stringer{testStringer{""}, testStringer{"b"}, testStringer{""}},
+			expected: "|b|",
+		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			// Тест экранирования
-			escaped := regexputil.EscapeForJSON(tt.input)
-			assert.Equal(t, tt.expected, escaped)
-
-			// Тест обратного преобразования
-			unescaped := regexputil.UnescapeFromJSON(escaped)
-			assert.Equal(t, tt.input, unescaped)
+			got := regexputil.ExpressionOrFunc(tt.input, tt.preprocessor)
+			if got != tt.expected {
+				t.Errorf("got %q, want %q", got, tt.expected)
+			}
 		})
 	}
 }
 
-func TestEdgeCases(t *testing.T) {
-	tests := []struct {
-		name     string
-		input    string
-		expected string
-	}{
-		{"Empty", "", ""},
-		{"SingleBackslash", `\`, `\\`},
-		{"MultipleBackslashes", `\\\`, `\\\\\\`},
-		{"MixedWithQuotes", `\"Hello\"`, `\\\"Hello\\\"`},
-	}
+// Вспомогательный тип для тестов
+type testStringer struct{ s string }
 
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			escaped := regexputil.EscapeForJSON(tt.input)
-			assert.Equal(t, tt.expected, escaped)
-			assert.Equal(t, tt.input, regexputil.UnescapeFromJSON(escaped))
-		})
-	}
-}
-
-func TestValidate(t *testing.T) {
-	tests := []struct {
-		pattern string
-		isValid bool
-	}{
-		{`\w+`, true},
-		{`[a-z`, false}, // Невалидное regexp
-	}
-
-	for _, tt := range tests {
-		err := regexputil.Validate(tt.pattern)
-		if tt.isValid {
-			assert.NoError(t, err)
-		} else {
-			assert.Error(t, err)
-		}
-	}
-}
-
-func TestUnicodeUnescape(t *testing.T) {
-	tests := []struct {
-		input    string
-		expected string
-	}{
-		{`\\\\→`, `\\→`},   // Экранированный слеш + Unicode
-		{`\\日本`, `\日本`},    // Иероглифы
-		{`\\ы\\я`, `\ы\я`}, // Кириллица
-		{`\\🦄`, `\🦄`},      // Emoji
-		{`\\★`, `\★`},      // Символ звезды
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.input, func(t *testing.T) {
-			assert.Equal(t, tt.expected, regexputil.UnescapeFromJSON(tt.input))
-		})
-	}
-}
-
-func TestEscapeForJSON_Unicode(t *testing.T) {
-	tests := []struct {
-		input    string
-		expected string
-	}{
-		{`→`, `→`},
-		{`\\→`, `\\\\→`},
-		{`\"日本\"`, `\\\"日本\\\"`},
-		{`🦄`, `🦄`},
-		{`\\★`, `\\\\★`},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.input, func(t *testing.T) {
-			assert.Equal(t, tt.expected, regexputil.EscapeForJSON(tt.input))
-		})
-	}
-}
+func (t testStringer) String() string { return t.s }

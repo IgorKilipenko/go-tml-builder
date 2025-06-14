@@ -1,4 +1,4 @@
-package exprutils
+package regexputil
 
 import (
 	"fmt"

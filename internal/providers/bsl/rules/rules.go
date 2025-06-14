@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"github.com/IgorKilipenko/go-tml-builder/internal/core/models"
+	"github.com/IgorKilipenko/go-tml-builder/internal/core/regexputil"
 	bslm "github.com/IgorKilipenko/go-tml-builder/internal/providers/bsl/models"
-	"github.com/IgorKilipenko/go-tml-builder/internal/utils/exprutils"
 )
 
 func Basic(patterns []*models.Rule) *models.Rule {
@@ -25,7 +25,7 @@ func BasicWithDefPatterns() *models.Rule {
 		{ // keyword literals, like: Неопределено
 			Name: "constant.language.bsl",
 			Match: fmt.Sprintf(`(?i:(?<=[^\wа-яё\.]|^)(%s)(?=[^\wа-яё\.]|$))`,
-				exprutils.ExpressionOrFunc(bslm.AllConstants(), nil)),
+				regexputil.ExpressionOrFunc(bslm.AllConstants(), nil)),
 		},
 		{ // numerics literals
 			Name:  "constant.numeric.bsl",
