@@ -89,5 +89,5 @@ func DeveloperCommentLine() *models.Rule {
 		},
 	}
 
-	return newRule(CommentLineKey(), patterns)
+	return newRule(FunctionDocumentationKey(), patterns)
 }
