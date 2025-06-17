@@ -3,42 +3,42 @@ package models
 type BslKeywords string
 
 const (
-	Var      BslKeywords = "Перем"
-	New      BslKeywords = "Новый"
-	Export   BslKeywords = "Экспорт"
-	Return   BslKeywords = "Возврат"
-	Continue BslKeywords = "Продолжить"
-	Brake    BslKeywords = "Прервать"
+	BslVar      BslKeywords = "Перем"
+	BslNew      BslKeywords = "Новый"
+	BslExport   BslKeywords = "Экспорт"
+	BslReturn   BslKeywords = "Возврат"
+	BslContinue BslKeywords = "Продолжить"
+	BslBrake    BslKeywords = "Прервать"
 
-	Async BslKeywords = "Асинх"
-	Wait  BslKeywords = "Ждать"
+	BslAsync BslKeywords = "Асинх"
+	BslWait  BslKeywords = "Ждать"
 
-	If     BslKeywords = "Если"
-	Else   BslKeywords = "Иначе"
-	ElseIf BslKeywords = "ИначеЕсли"
-	Тогда  BslKeywords = "Then"
-	EndIf  BslKeywords = "КонецЕсли"
+	BslIf     BslKeywords = "Если"
+	BslElse   BslKeywords = "Иначе"
+	BslElseIf BslKeywords = "ИначеЕсли"
+	BslТогда  BslKeywords = "Then"
+	BslEndIf  BslKeywords = "КонецЕсли"
 
-	For     BslKeywords = "Для"
-	Each    BslKeywords = "Каждого"
-	In      BslKeywords = "Из"
-	Loop    BslKeywords = "Цикл"
-	EndLoop BslKeywords = "КонецЦикла"
-	While   BslKeywords = "Пока"
+	BslFor     BslKeywords = "Для"
+	BslEach    BslKeywords = "Каждого"
+	BslIn      BslKeywords = "Из"
+	BslLoop    BslKeywords = "Цикл"
+	BslEndLoop BslKeywords = "КонецЦикла"
+	BslWhile   BslKeywords = "Пока"
 
-	Try       BslKeywords = "Попытка"
-	Catch     BslKeywords = "Исключение"
-	EndTry    BslKeywords = "КонецПопытки"
-	Exception BslKeywords = "ВызватьИсключение"
+	BslTry       BslKeywords = "Попытка"
+	BslCatch     BslKeywords = "Исключение"
+	BslEndTry    BslKeywords = "КонецПопытки"
+	BslException BslKeywords = "ВызватьИсключение"
 )
 
 type BslConstants string
 
 const (
-	Undefined BslConstants = "Неопределено"
-	Null      BslConstants = "Null"
-	True      BslConstants = "Истина"
-	False     BslConstants = "Ложь"
+	BslUndefined BslConstants = "Неопределено"
+	BslNull      BslConstants = "Null"
+	BslTrue      BslConstants = "Истина"
+	BslFalse     BslConstants = "Ложь"
 )
 
 func (k BslConstants) String() string {
@@ -47,59 +47,111 @@ func (k BslConstants) String() string {
 
 func AllConstLiterals() []BslConstants {
 	return []BslConstants{
-		Undefined,
-		Null,
-		True,
-		False,
+		BslUndefined,
+		BslNull,
+		BslTrue,
+		BslFalse,
 	}
 }
 
 type BslPunctuation string
 
 const (
-	EndSignature BslPunctuation = ";"
+	BslSemicolon BslPunctuation = ";"
+	BslCondOp    BslPunctuation = "?"
 
-	StartStruct BslPunctuation = "{"
-	EndStruct   BslPunctuation = "}"
+	BslParenOpen  BslPunctuation = "("
+	BslParenClose BslPunctuation = ")"
 
-	StartArray BslPunctuation = "["
-	EndArray   BslPunctuation = "]"
+	BslCurlyOpen  BslPunctuation = "{"
+	BslCurlyClose BslPunctuation = "}"
+
+	BslSquareOpen  BslPunctuation = "["
+	BslSquareClose BslPunctuation = "]"
 )
+
+func (k BslPunctuation) String() string {
+	return string(k)
+}
 
 type BslOperators string
 
 const (
-	Equal         BslOperators = "="
-	Lower         BslOperators = "<"
-	LowerOrEqual  BslOperators = "<="
-	Bigger        BslOperators = ">"
-	BiggerOrEqual BslOperators = "=>"
+	// Операторы сравнения (Comparison Operators)
+	BslEqual          BslOperators = "="
+	BslNotEqual       BslOperators = "<>"
+	BslLess           BslOperators = "<"
+	BslLessOrEqual    BslOperators = "<="
+	BslGreater        BslOperators = ">"
+	BslGreaterOrEqual BslOperators = "=>"
 
-	Plus     BslOperators = "+"
-	Minus    BslOperators = "-"
-	Multiple BslOperators = "*"
-	Divide   BslOperators = "/"
-	Mode     BslOperators = "%"
+	// Арифметические операторы (Arithmetic Operators)
+	BslAdd      BslOperators = "+"
+	BslSubtract BslOperators = "-"
+	BslMultiply BslOperators = "*"
+	BslDivide   BslOperators = "/"
+	BslMod      BslOperators = "%"
 
-	And BslOperators = "И"
-	Or  BslOperators = "ИЛИ"
-	Not BslOperators = "НЕ"
+	// Логические операторы (Logical Operators)
+	BslAnd BslOperators = "И"
+	BslOr  BslOperators = "ИЛИ"
+	BslNot BslOperators = "НЕ"
 )
+
+func (k BslOperators) String() string {
+	return string(k)
+}
+
+// AllComparisonOperators операторы сравнения: [=, <>, <, >, =>]
+func AllComparisonOperators() []BslOperators {
+	return []BslOperators{
+		BslEqual,
+		BslNotEqual,
+		BslLess,
+		BslLessOrEqual,
+		BslGreater,
+		BslGreaterOrEqual,
+	}
+}
+
+// AllArithmeticOperators логические операторы: [+, -, *, /, %]
+func AllArithmeticOperators() []BslOperators {
+	return []BslOperators{
+		BslAdd,
+		BslSubtract,
+		BslMultiply,
+		BslDivide,
+		BslMod,
+	}
+}
+
+// AllLogicalOperators арифметические операторы: [И, ИЛИ, НЕ]
+func AllLogicalOperators() []BslOperators {
+	return []BslOperators{
+		BslAnd,
+		BslOr,
+		BslNot,
+	}
+}
 
 type BslUniversalTypes string
 
 const (
-	String         BslUniversalTypes = "Строка"
-	Date           BslUniversalTypes = "Дата"
-	Strict         BslUniversalTypes = "Структура"
-	ReadOnlyStrict BslUniversalTypes = "ФиксированнаяСтруктура"
-	Array          BslUniversalTypes = "Массив"
-	ReadOnlyArray  BslUniversalTypes = "ФиксированныйМассив"
-	Map            BslUniversalTypes = "Соответствие"
-	ReadOnlyMap    BslUniversalTypes = "ФиксированноеСоответствие"
-	Tree           BslUniversalTypes = "Дерево"
-	Table          BslUniversalTypes = "ТаблицаЗначений"
+	BslStr         BslUniversalTypes = "Строка"
+	BslDate        BslUniversalTypes = "Дата"
+	BslStruct      BslUniversalTypes = "Структура"
+	BslFixedStruct BslUniversalTypes = "ФиксированнаяСтруктура"
+	BslArr         BslUniversalTypes = "Массив"
+	BslFixedArr    BslUniversalTypes = "ФиксированныйМассив"
+	BslMap         BslUniversalTypes = "Соответствие"
+	BslFixedMap    BslUniversalTypes = "ФиксированноеСоответствие"
+	BslTree        BslUniversalTypes = "Дерево"
+	BslValTable    BslUniversalTypes = "ТаблицаЗначений"
 )
+
+func (k BslUniversalTypes) String() string {
+	return string(k)
+}
 
 type BslModelTypes string
 

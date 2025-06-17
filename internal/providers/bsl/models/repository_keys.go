@@ -6,6 +6,12 @@ const (
 	KeyBasic         models.RepositoryKey = "basic"
 	KeyMiscellaneous models.RepositoryKey = "miscellaneous"
 
+	KeySupportOperators    models.RepositoryKey = "supportOperators"
+	KeyLogicalOperators    models.RepositoryKey = "logicalOperators"
+	KeyComparisonOperators models.RepositoryKey = "comparisonOperators"
+	KeyTernaryOperators    models.RepositoryKey = "ternaryOperators"
+	KeyStatementOperators  models.RepositoryKey = "statementOperators"
+
 	KeyStringWithSingleValue models.RepositoryKey = "stringWithSingleSupportValue"
 	KeyStringSupportValues   models.RepositoryKey = "stringSupportValues"
 	KeyQuotedString          models.RepositoryKey = "quotedString"
