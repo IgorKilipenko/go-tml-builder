@@ -21,6 +21,7 @@ func FunctionDocumentationKey() models.RepositoryKey {
 	return bslm.KeyFunctionDocumentation
 }
 
+// CommentLine правила для однострочных комментариев вида: // ...
 func CommentLine() *models.Rule {
 	patterns := []*models.Rule{
 		DeveloperCommentLineKey().IncludeRef(),
@@ -33,6 +34,7 @@ func CommentLine() *models.Rule {
 	return newRule(CommentLineKey(), patterns)
 }
 
+// CommentCommentBlockLine правила для последовательно идущих однострочных комментариев вида: // ...\n // ...
 func CommentBlock() *models.Rule {
 	patterns := []*models.Rule{
 		FunctionDocumentationKey().IncludeRef(),
@@ -53,4 +55,39 @@ func CommentBlock() *models.Rule {
 	commentBlockRule.End = `(?=^(?!\s*//))`
 
 	return commentBlockRule
+}
+
+// DeveloperCommentLine правила строки комментария разработчика прим.: // +++ Гарант+ Иванов
+func DeveloperCommentLine() *models.Rule {
+	scopeCommentLineDevelop := "comment.line.developer.bsl"
+
+	patterns := []*models.Rule{
+		DeveloperCommentLineKey().IncludeRef(),
+		{
+			Match: `\s*(//\s*(?:->{3}|<{3}-)\s+.*)$`,
+			Captures: map[string]models.Capture{
+				"1": {Name: scopeCommentLineDevelop},
+			},
+		},
+		{
+			Match: `\s*(//\s*(?:\{{3}|\}{3})\s+.*)$`,
+			Captures: map[string]models.Capture{
+				"1": {Name: scopeCommentLineDevelop},
+			},
+		},
+		{
+			Match: `\s*(//\s*(?:\+{3}|-{3})\s+.*)$`,
+			Captures: map[string]models.Capture{
+				"1": {Name: scopeCommentLineDevelop},
+			},
+		},
+		{
+			Match: `\s*(//.*(?:\+{2}|-{2})\s*)$`,
+			Captures: map[string]models.Capture{
+				"1": {Name: scopeCommentLineDevelop},
+			},
+		},
+	}
+
+	return newRule(CommentLineKey(), patterns)
 }

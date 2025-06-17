@@ -21,7 +21,7 @@ func Basic() *models.Rule {
 			Name:  "constant.other.date.bsl",
 			Match: `'((\d{4}[^\d']*\d{2}[^\d']*\d{2})([^\d']*\d{2}[^\d']*\d{2}([^\d']*\d{2})?)?)'`,
 		},
-		{ // like: ,
+		{ // comma like: ,
 			Name:  "keyword.operator.bsl",
 			Match: `(,)`,
 		},

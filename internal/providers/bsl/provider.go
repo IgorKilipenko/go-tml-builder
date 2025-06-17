@@ -13,14 +13,6 @@ func NewProvider() *BslProvider {
 }
 
 func (p *BslProvider) GetMainRules() []*models.Rule {
-	// var rules []*models.Rule
-
-	// // Собираем все правила
-	// rules = append(rules, ControlKeywords()...)
-	// rules = append(rules, TypeKeywords()...)
-	// rules = append(rules, CommentRules()...)
-	// rules = append(rules, FunctionRules()...)
-
 	rules := []*models.Rule{
 		bslModels.KeyBasic.IncludeRef(),
 		bslModels.KeyMiscellaneous.IncludeRef(),
@@ -40,6 +32,16 @@ func (p *BslProvider) GetRepository() models.Repository {
 	repo[rule.Key] = rule
 
 	rule = bslRules.ConstLiterals()
+	repo[rule.Key] = rule
+
+	// Комментарии
+	rule = bslRules.CommentLine()
+	repo[rule.Key] = rule
+
+	rule = bslRules.CommentBlock()
+	repo[rule.Key] = rule
+
+	rule = bslRules.DeveloperCommentLine()
 	repo[rule.Key] = rule
 
 	return repo
