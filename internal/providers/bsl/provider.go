@@ -44,5 +44,12 @@ func (p *BslProvider) GetRepository() models.Repository {
 	rule = bslRules.DeveloperCommentLine()
 	repo[rule.Key] = rule
 
+	// Операторы
+	rule = bslRules.SupportOperators()
+	repo[rule.Key] = rule
+
+	rule = bslRules.LogicalOperators()
+	repo[rule.Key] = rule
+
 	return repo
 }

@@ -11,7 +11,7 @@ const (
 	BslBrake    BslKeywords = "Прервать"
 
 	BslAsync BslKeywords = "Асинх"
-	BslAwait  BslKeywords = "Ждать"
+	BslAwait BslKeywords = "Ждать"
 
 	BslIf     BslKeywords = "Если"
 	BslElse   BslKeywords = "Иначе"
