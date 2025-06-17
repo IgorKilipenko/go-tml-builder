@@ -1,63 +1,45 @@
 package rules
 
 import (
-	"fmt"
-
 	"github.com/IgorKilipenko/go-tml-builder/internal/core/models"
-	"github.com/IgorKilipenko/go-tml-builder/internal/core/regexputil"
 	bslm "github.com/IgorKilipenko/go-tml-builder/internal/providers/bsl/models"
 )
 
-func Basic(patterns []*models.Rule) *models.Rule {
-	return newRule(bslm.KeyBasic, patterns)
-}
-
-func BasicWithDefPatterns() *models.Rule {
+func Basic() *models.Rule {
 	patterns := []*models.Rule{
-		{ // comments (single line)
-			Name:  "comment.line.double-slash.bsl",
-			Begin: "//",
-			End:   "$",
-		},
+		CommentBlockKey().IncludeRef(),
+		CommentLineKey().IncludeRef(),
 		bslm.KeyStringWithSingleValue.IncludeRef(),
 		bslm.KeyStringSupportValues.IncludeRef(),
 		bslm.KeyQuotedString.IncludeRef(),
-		{ // keyword literals, like: Неопределено
-			Name: "constant.language.bsl",
-			Match: fmt.Sprintf(`(?i:(?<=[^\wа-яё\.]|^)(%s)(?=[^\wа-яё\.]|$))`,
-				regexputil.ExpressionOrFunc(bslm.AllConstants(), nil)),
-		},
+		bslm.KeyConstantsLiterals.IncludeRef(),
 		{ // numerics literals
 			Name:  "constant.numeric.bsl",
-			Match: "(?<=[^\\wа-яё\\.]|^)(\\d+\\.?\\d*)(?=[^\\wа-яё\\.]|$)",
+			Match: `(?<=[^\wа-яё\.]|^)(\d+\.?\d*)(?=[^\wа-яё\.]|$)`,
 		},
 		{ // date literals, like: '20250101'
 			Name:  "constant.other.date.bsl",
-			Match: "\\'((\\d{4}[^\\d\\']*\\d{2}[^\\d\\']*\\d{2})([^\\d\\']*\\d{2}[^\\d\\']*\\d{2}([^\\d\\']*\\d{2})?)?)\\'",
+			Match: `'((\d{4}[^\d']*\d{2}[^\d']*\d{2})([^\d']*\d{2}[^\d']*\d{2}([^\d']*\d{2})?)?)'`,
 		},
 		{ // like: ,
 			Name:  "keyword.operator.bsl",
-			Match: "(,)",
+			Match: `(,)`,
 		},
 		{ // like: (
 			Name:  "punctuation.bracket.begin.bsl",
-			Match: "(\\()",
+			Match: `(\()`,
 		},
 		{ // like: (
 			Name:  "punctuation.bracket.end.bsl",
-			Match: "(\\))",
+			Match: `(\))`,
 		},
 		bslm.KeyExtensionRegions.IncludeRef(),
 	}
 
-	return Basic(patterns)
+	return newRule(bslm.KeyBasic, patterns)
 }
 
-func Miscellaneous(patterns []*models.Rule) *models.Rule {
-	return newRule(bslm.KeyMiscellaneous, patterns)
-}
-
-func MiscellaneousWithDefPatterns() *models.Rule {
+func Miscellaneous() *models.Rule {
 	patterns := []*models.Rule{
 		{
 			Include: "keywordOperators",
@@ -82,7 +64,7 @@ func MiscellaneousWithDefPatterns() *models.Rule {
 		},
 	}
 
-	return Miscellaneous(patterns)
+	return newRule(bslm.KeyMiscellaneous, patterns)
 }
 
 func newRule(key models.RepositoryKey, patterns []*models.Rule) *models.Rule {

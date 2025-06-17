@@ -9,8 +9,6 @@ const (
 	Return   BslKeywords = "Возврат"
 	Continue BslKeywords = "Продолжить"
 	Brake    BslKeywords = "Прервать"
-	And      BslKeywords = "И"
-	Or       BslKeywords = "ИЛИ"
 
 	Async BslKeywords = "Асинх"
 	Wait  BslKeywords = "Ждать"
@@ -38,6 +36,7 @@ type BslConstants string
 
 const (
 	Undefined BslConstants = "Неопределено"
+	Null      BslConstants = "Null"
 	True      BslConstants = "Истина"
 	False     BslConstants = "Ложь"
 )
@@ -46,9 +45,10 @@ func (k BslConstants) String() string {
 	return string(k)
 }
 
-func AllConstants() []BslConstants {
-	return []BslConstants {
+func AllConstLiterals() []BslConstants {
+	return []BslConstants{
 		Undefined,
+		Null,
 		True,
 		False,
 	}
@@ -64,28 +64,51 @@ const (
 
 	StartArray BslPunctuation = "["
 	EndArray   BslPunctuation = "]"
-
-	Equal         BslPunctuation = "="
-	Lower         BslPunctuation = "<"
-	LowerOrEqual  BslPunctuation = "<="
-	Bigger        BslPunctuation = ">"
-	BiggerOrEqual BslPunctuation = "=>"
 )
 
-type BslBasicTypes string
+type BslOperators string
 
 const (
-	String         BslBasicTypes = "Строка"
-	Date           BslBasicTypes = "Дата"
-	Strict         BslBasicTypes = "Структура"
-	ReadOnlyStrict BslBasicTypes = "ФиксированнаяСтруктура"
-	Array          BslBasicTypes = "Массив"
-	ReadOnlyArray  BslBasicTypes = "ФиксированныйМассив"
-	Map            BslBasicTypes = "Соответствие"
-	ReadOnlyMap    BslBasicTypes = "ФиксированноеСоответствие"
+	Equal         BslOperators = "="
+	Lower         BslOperators = "<"
+	LowerOrEqual  BslOperators = "<="
+	Bigger        BslOperators = ">"
+	BiggerOrEqual BslOperators = "=>"
+
+	Plus     BslOperators = "+"
+	Minus    BslOperators = "-"
+	Multiple BslOperators = "*"
+	Divide   BslOperators = "/"
+	Mode     BslOperators = "%"
+
+	And BslOperators = "И"
+	Or  BslOperators = "ИЛИ"
+	Not BslOperators = "НЕ"
+)
+
+type BslUniversalTypes string
+
+const (
+	String         BslUniversalTypes = "Строка"
+	Date           BslUniversalTypes = "Дата"
+	Strict         BslUniversalTypes = "Структура"
+	ReadOnlyStrict BslUniversalTypes = "ФиксированнаяСтруктура"
+	Array          BslUniversalTypes = "Массив"
+	ReadOnlyArray  BslUniversalTypes = "ФиксированныйМассив"
+	Map            BslUniversalTypes = "Соответствие"
+	ReadOnlyMap    BslUniversalTypes = "ФиксированноеСоответствие"
+	Tree           BslUniversalTypes = "Дерево"
+	Table          BslUniversalTypes = "ТаблицаЗначений"
 )
 
 type BslModelTypes string
+
+var allModelTypes []BslModelTypes
+
+func registerModelType(val BslModelTypes) BslModelTypes {
+	allModelTypes = append(allModelTypes, val)
+	return val
+}
 
 const (
 	DocumentObject BslModelTypes = "ДокументОбъект"
@@ -93,3 +116,12 @@ const (
 	CatalogObject  BslModelTypes = "СправочникОбъект"
 	CatalogRef     BslModelTypes = "СправочникСсылка"
 )
+
+func AllModelTypes() []BslModelTypes {
+	return []BslModelTypes{
+		DocumentObject,
+		DocumentRef,
+		CatalogObject,
+		CatalogRef,
+	}
+}

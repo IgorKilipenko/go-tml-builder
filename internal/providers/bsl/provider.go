@@ -33,10 +33,13 @@ func (p *BslProvider) GetRepository() models.Repository {
 	repo := make(models.Repository)
 
 	// Стандартные правила
-	rule := bslRules.BasicWithDefPatterns()
+	rule := bslRules.Basic()
 	repo[rule.Key] = rule
 
-	rule = bslRules.MiscellaneousWithDefPatterns()
+	rule = bslRules.Miscellaneous()
+	repo[rule.Key] = rule
+
+	rule = bslRules.ConstLiterals()
 	repo[rule.Key] = rule
 
 	return repo
