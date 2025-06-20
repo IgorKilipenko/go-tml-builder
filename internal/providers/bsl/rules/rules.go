@@ -42,9 +42,7 @@ func Basic() *models.Rule {
 func Miscellaneous() *models.Rule {
 	patterns := []*models.Rule{
 		SupportOperatorsKey().IncludeRef(),
-		{
-			Include: "objectDefinition",
-		},
+		ObjectDefinitionKey().IncludeRef(),
 		{
 			Include: "supportFunctions",
 		},

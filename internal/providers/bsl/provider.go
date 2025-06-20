@@ -14,8 +14,9 @@ func NewProvider() *BslProvider {
 
 func (p *BslProvider) GetMainRules() []*models.Rule {
 	rules := []*models.Rule{
-		bslModels.KeyBasic.IncludeRef(),
 		bslModels.KeyMiscellaneous.IncludeRef(),
+		// TODO: Add query ref ...,
+		bslModels.KeyBasic.IncludeRef(),
 	}
 
 	return rules
@@ -49,6 +50,10 @@ func (p *BslProvider) GetRepository() models.Repository {
 	repo[rule.Key] = rule
 
 	rule = bslRules.LogicalOperators()
+	repo[rule.Key] = rule
+
+	// Конструкторы: Новый ()
+	rule = bslRules.ObjectDefinition()
 	repo[rule.Key] = rule
 
 	return repo

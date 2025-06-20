@@ -23,4 +23,6 @@ const (
 	KeyCommentLine           models.RepositoryKey = "commentLine"
 	KeyDeveloperCommentLine  models.RepositoryKey = "developerCommentLine"
 	KeyFunctionDocumentation models.RepositoryKey = "functionDocumentation"
+
+	KeyObjectDefinition models.RepositoryKey = "objectDefinition" // like: Новый Структура
 )
