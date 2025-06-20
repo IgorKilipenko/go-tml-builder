@@ -43,9 +43,7 @@ func Miscellaneous() *models.Rule {
 	patterns := []*models.Rule{
 		SupportOperatorsKey().IncludeRef(),
 		ObjectDefinitionKey().IncludeRef(),
-		{
-			Include: "supportFunctions",
-		},
+		CallSupportFunctionsKey().IncludeRef(),
 		{
 			Include: "supportEnums",
 		},

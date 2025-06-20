@@ -25,4 +25,7 @@ const (
 	KeyFunctionDocumentation models.RepositoryKey = "functionDocumentation"
 
 	KeyObjectDefinition models.RepositoryKey = "objectDefinition" // like: Новый Структура
+
+	// Functions
+	KeyCallSupportFunctions models.RepositoryKey = "supportFunctions" // Вызов глобальных предопределенных функций
 )

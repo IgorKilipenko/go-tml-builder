@@ -11,7 +11,7 @@ func ObjectDefinitionKey() models.RepositoryKey {
 	return bslm.KeyObjectDefinition
 }
 
-// CommentLine правила для однострочных комментариев вида: // ...
+// ObjectDefinition правила для вызова конструктора: Новый Структура, Новый Соответствие...
 func ObjectDefinition() *models.Rule {
 	newKeyword := bslm.BslNew
 	basePattern := fmt.Sprintf(`(?i:(%s))\s+([_$[:alpha:]][_$[:alnum:]]*\b)`, newKeyword)

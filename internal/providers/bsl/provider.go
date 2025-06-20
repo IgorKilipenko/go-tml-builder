@@ -56,5 +56,8 @@ func (p *BslProvider) GetRepository() models.Repository {
 	rule = bslRules.ObjectDefinition()
 	repo[rule.Key] = rule
 
+	// Функции
+	rule = bslRules.CallSupportFunctions()
+	repo[rule.Key] = rule
 	return repo
 }

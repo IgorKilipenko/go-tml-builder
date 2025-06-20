@@ -1,22 +1,26 @@
 package rules
 
-import "github.com/IgorKilipenko/go-tml-builder/internal/core/models"
+import (
+	"fmt"
 
-func FunctionRules() []*models.Rule {
-	return []*models.Rule{
+	"github.com/IgorKilipenko/go-tml-builder/internal/core/models"
+	"github.com/IgorKilipenko/go-tml-builder/internal/core/regexputil"
+	bslm "github.com/IgorKilipenko/go-tml-builder/internal/providers/bsl/models"
+)
+
+func CallSupportFunctionsKey() models.RepositoryKey {
+	return bslm.KeyCallSupportFunctions
+}
+
+// CallSupportFunctions правила для вызова глобальных предопределенных функций
+func CallSupportFunctions() *models.Rule {
+	patterns := []*models.Rule{
 		{
-			Name:  "meta.function.bsl",
-			Begin: `\b(Процедура|Функция)\s+([а-яА-ЯёЁ\w]+)\b`,
-			End:   `\b(КонецПроцедуры|КонецФункции)\b`,
-			Captures: map[string]models.Capture{
-				"1": {Name: "keyword.declaration.bsl"},
-				"2": {Name: "entity.name.function.bsl"},
-			},
-			Patterns: []*models.Rule{
-				{
-					Include: "$self", // Рекурсивно включаем другие правила
-				},
-			},
+			Name: "support.function.bsl",
+			Match: fmt.Sprintf("(?x)(?i:(?<=[^\\wа-яё\\.]|^)(%s)\\s*(?=\\())",
+				regexputil.ExpressionOrFunc(bslm.AllConstLiterals(), nil)),
 		},
 	}
+
+	return newRule(CallSupportFunctionsKey(), patterns)
 }
