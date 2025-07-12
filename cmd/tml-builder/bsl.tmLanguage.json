@@ -1,0 +1,1148 @@
+{
+  "scopeName": "source.bsl",
+  "name": "1C:Community (BSL)",
+  "patterns": [
+    {
+      "include": "#basic"
+    },
+    {
+      "include": "#miscellaneous"
+    },
+    {
+      "include": "#functionDocumentation"
+    },
+    {
+      "include": "#functionDefinition"
+    },
+    {
+      "include": "#functionEnd"
+    },
+    {
+      "include": "#variableDefinition"
+    },
+    {
+      "include": "#conditional"
+    },
+    {
+      "include": "#variableAssignment"
+    },
+    {
+      "include": "#controlKeywords"
+    },
+    {
+      "include": "#annotations"
+    },
+    {
+      "include": "#storageModifiers"
+    },
+    {
+      "include": "#mainRegion"
+    },
+    {
+      "include": "#blockEntities"
+    }
+  ],
+  "repository": {
+    "_docParametersBlockArgs": {
+      "begin": "^\\s*(//\\s*)(\\*+\\s*)?([А-Яа-яЁё\\w]+)\\s*-\\s*([А-Яа-яЁё\\w.]+)(?:(\\sиз\\s+)([А-Яа-яЁё\\w.]+))?",
+      "end": "(?=\\n|$)",
+      "patterns": [
+        {
+          "name": "meta.documentation.parameters.type.list.bsl",
+          "match": "(,\\s*)([А-Яа-яЁё\\w.]+)(?:(\\sиз\\s+)([А-Яа-яЁё\\w.]+))?",
+          "captures": {
+            "1": {
+              "name": "punctuation.separator.description.bsl"
+            },
+            "2": {
+              "name": "entity.name.type.bsl"
+            },
+            "3": {
+              "name": "punctuation.separator.description.bsl"
+            },
+            "4": {
+              "name": "entity.name.type.bsl"
+            }
+          }
+        },
+        {
+          "name": "comment.line.description.bsl",
+          "begin": "\\s*-\\s*",
+          "end": "(?=\\n|$)",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.separator.description.bsl"
+            }
+          }
+        }
+      ],
+      "beginCaptures": {
+        "1": {
+          "name": "comment.line.double-slash.bsl"
+        },
+        "2": {
+          "name": "punctuation.separator.description.bsl"
+        },
+        "3": {
+          "name": "variable.parameter.bsl"
+        },
+        "4": {
+          "name": "entity.name.type.bsl"
+        },
+        "5": {
+          "name": "punctuation.separator.description.bsl"
+        },
+        "6": {
+          "name": "entity.name.type.bsl"
+        }
+      }
+    },
+    "_docReturnsBlockArgs": {
+      "begin": "^\\s*(//\\s*)(-\\s*)?([А-Яа-яЁё\\w.]+)(?:(\\sиз\\s+)([А-Яа-яЁё\\w.]+))?",
+      "end": "(?=\\n|$)",
+      "patterns": [
+        {
+          "name": "meta.documentation.returns.type.list.bsl",
+          "match": "(,\\s*)([А-Яа-яЁё\\w.]+)(?:(\\sиз\\s+)([А-Яа-яЁё\\w.]+))?",
+          "captures": {
+            "1": {
+              "name": "punctuation.separator.description.bsl"
+            },
+            "2": {
+              "name": "entity.name.type.bsl"
+            },
+            "3": {
+              "name": "punctuation.separator.description.bsl"
+            },
+            "4": {
+              "name": "entity.name.type.bsl"
+            }
+          }
+        },
+        {
+          "name": "comment.line.description.bsl",
+          "begin": "\\s*-\\s*",
+          "end": "(?=\\n|$)",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.separator.description.bsl"
+            }
+          }
+        }
+      ],
+      "beginCaptures": {
+        "1": {
+          "name": "comment.line.double-slash.bsl"
+        },
+        "2": {
+          "name": "punctuation.separator.description.bsl"
+        },
+        "3": {
+          "name": "entity.name.type.bsl"
+        },
+        "4": {
+          "name": "punctuation.separator.description.bsl"
+        },
+        "5": {
+          "name": "entity.name.type.bsl"
+        }
+      }
+    },
+    "annotations": {
+      "patterns": [
+        {
+          "begin": "(?i)(\u0026([a-zа-яё0-9_]+))\\s*(\\()",
+          "end": "(\\))",
+          "patterns": [
+            {
+              "include": "#basic"
+            },
+            {
+              "name": "keyword.operator.assignment.bsl",
+              "match": "(=)"
+            },
+            {
+              "name": "invalid.illegal.bsl",
+              "match": "(?\u003c=[^\\wа-яё\\.]|^)((?\u003c==)(?i)[a-zа-яё0-9_]+)(?=[^\\wа-яё\\.]|$)"
+            },
+            {
+              "name": "invalid.illegal.bsl",
+              "match": "(?\u003c=[^\\wа-яё\\.]|^)((?\u003c==\\s)\\s*(?i)[a-zа-яё0-9_]+)(?=[^\\wа-яё\\.]|$)"
+            },
+            {
+              "name": "variable.annotation.bsl",
+              "match": "(?i:[a-zа-яё0-9_]+)"
+            }
+          ],
+          "beginCaptures": {
+            "1": {
+              "name": "storage.type.annotation.bsl"
+            },
+            "3": {
+              "name": "punctuation.bracket.begin.bsl"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "punctuation.bracket.end.bsl"
+            }
+          }
+        },
+        {
+          "name": "storage.type.annotation.bsl",
+          "match": "(?i)(\u0026([a-zа-яё0-9_]+))"
+        }
+      ]
+    },
+    "arrayLiteral": {
+      "name": "meta.array.literal.bsl",
+      "begin": "\\s*(\\[)",
+      "end": "\\]",
+      "patterns": [
+        {
+          "include": "#basic"
+        },
+        {
+          "include": "#blockEntities"
+        }
+      ],
+      "beginCaptures": {
+        "1": {
+          "name": "meta.brace.square.bsl"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "meta.brace.square.bsl"
+        }
+      }
+    },
+    "basic": {
+      "patterns": [
+        {
+          "include": "#commentBlock"
+        },
+        {
+          "include": "#commentLine"
+        },
+        {
+          "include": "#stringWithSingleSupportValue"
+        },
+        {
+          "include": "#stringSupportValues"
+        },
+        {
+          "include": "#quotedString"
+        },
+        {
+          "include": "#constantsLiterals"
+        },
+        {
+          "name": "constant.numeric.bsl",
+          "match": "(?\u003c=[^\\wа-яё\\.]|^)(\\d+\\.?\\d*)(?=[^\\wа-яё\\.]|$)"
+        },
+        {
+          "name": "constant.other.date.bsl",
+          "match": "'((\\d{4}[^\\d']*\\d{2}[^\\d']*\\d{2})([^\\d']*\\d{2}[^\\d']*\\d{2}([^\\d']*\\d{2})?)?)'"
+        },
+        {
+          "name": "keyword.operator.bsl",
+          "match": "(,)"
+        },
+        {
+          "name": "punctuation.bracket.begin.bsl",
+          "match": "(\\()"
+        },
+        {
+          "name": "punctuation.bracket.end.bsl",
+          "match": "(\\))"
+        },
+        {
+          "include": "#extensionRegions"
+        }
+      ]
+    },
+    "blockAwait": {
+      "patterns": [
+        {
+          "name": "keyword.control.flow.bsl",
+          "match": "(?i)\\b(Ждать)\\b"
+        }
+      ]
+    },
+    "blockEntities": {
+      "patterns": [
+        {
+          "include": "#blockAwait"
+        },
+        {
+          "include": "#arrayLiteral"
+        },
+        {
+          "include": "#blockFunctions"
+        },
+        {
+          "include": "#blockObjectProperties"
+        },
+        {
+          "include": "#blockVariables"
+        }
+      ]
+    },
+    "blockFunctions": {
+      "patterns": [
+        {
+          "begin": "(?\u003c!(?i:Новый)\\s+)(?:\\s*(\\.)\\s*)?\\b([_$[:alpha:]][_$[:alnum:]]*\\b)(?:\\s*)(\\()\\s*",
+          "end": "\\s*(\\))",
+          "patterns": [
+            {
+              "include": "#basic"
+            },
+            {
+              "include": "#miscellaneous"
+            },
+            {
+              "include": "#blockEntities"
+            }
+          ],
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.accessor.bsl"
+            },
+            "2": {
+              "name": "entity.name.function.bsl"
+            },
+            "3": {
+              "name": "punctuation.bracket.begin.bsl"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "punctuation.bracket.end.bsl"
+            }
+          }
+        }
+      ]
+    },
+    "blockObjectProperties": {
+      "patterns": [
+        {
+          "match": "(?\u003c=(?i:Метаданные)\\s*)(\\.)(?:\\s*)(РежимСовместимости|СвойстваОбъектов)(?:\\s*)(?!\\s*\\()",
+          "captures": {
+            "1": {
+              "name": "punctuation.accessor.bsl"
+            },
+            "2": {
+              "name": "support.constant.bsl"
+            }
+          }
+        },
+        {
+          "match": "(?\u003c=(?:\\b[_$[:alpha:]][_$[:alnum:]]*\\s*)|(?:[\\s\\]]*))(\\.)(?:\\s*)([_$[:alpha:]][_$[:alnum:]]*\\b)(?:\\s*)(?=[\\[]?)(?!\\s*\\()",
+          "captures": {
+            "1": {
+              "name": "punctuation.accessor.bsl"
+            },
+            "2": {
+              "name": "variable.other.property.bsl"
+            }
+          }
+        }
+      ]
+    },
+    "blockVariables": {
+      "patterns": [
+        {
+          "match": "\\b([_$[:alpha:]][_$[:alnum:]]*)\\b(?=[\\s*\\[]?)(?![\\\\(])",
+          "captures": {
+            "1": {
+              "name": "variable.other.readwrite.bsl, entity.name.variable.bsl"
+            }
+          }
+        }
+      ]
+    },
+    "commentBlock": {
+      "name": "comment.line.double-slash.bsl",
+      "begin": "^\\s*(?=//\\s*)",
+      "end": "(?=^(?!\\s*//))",
+      "patterns": [
+        {
+          "include": "#functionDocumentation"
+        },
+        {
+          "match": "^\\s*(//\\s*)(Устарела)(\\.\\s*.*)\\s*$",
+          "captures": {
+            "1": {
+              "name": "comment.line.double-slash.bsl"
+            },
+            "2": {
+              "name": "keyword.deprecated.bsl"
+            },
+            "3": {
+              "name": "comment.line.double-slash.bsl"
+            }
+          }
+        },
+        {
+          "include": "#commentLine"
+        }
+      ]
+    },
+    "commentLine": {
+      "patterns": [
+        {
+          "include": "#developerCommentLine"
+        },
+        {
+          "name": "comment.line.double-slash.bsl",
+          "match": "//.*$"
+        }
+      ]
+    },
+    "conditional": {
+      "name": "meta.conditional.bsl",
+      "begin": "(?i:(?\u003c=;|^)\\s*(Если))",
+      "end": "(?i:(Тогда))",
+      "patterns": [
+        {
+          "include": "#basic"
+        },
+        {
+          "include": "#miscellaneous"
+        },
+        {
+          "include": "#blockEntities"
+        }
+      ],
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control.conditional.bsl"
+        }
+      },
+      "endCaptures": {
+        "1": {
+          "name": "keyword.control.conditional.bsl"
+        }
+      }
+    },
+    "constantsLiterals": {
+      "patterns": [
+        {
+          "name": "constant.language.bsl",
+          "match": "(?i:(?\u003c=[^\\wа-яё\\.]|^)(Неопределено|Null|Истина|Ложь)(?=[^\\wа-яё\\.]|$))"
+        }
+      ]
+    },
+    "controlKeywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.import.bsl",
+          "match": "(?i)#(Использовать)(?=[^\\wа-яё\\.]|$)"
+        },
+        {
+          "name": "keyword.control.native.bsl",
+          "match": "(?i)#native"
+        },
+        {
+          "name": "keyword.control.bsl",
+          "match": "(?i:(?\u003c=[^\\wа-яё\\.]|^)(Возврат|Продолжить|Прервать)(?=[^\\wа-яё\\.]|$))"
+        },
+        {
+          "name": "keyword.control.conditional.bsl",
+          "match": "(?i:(?\u003c=[^\\wа-яё\\.]|^)(Если|Иначе|ИначеЕсли|Тогда|КонецЕсли)(?=[^\\wа-яё\\.]|$))"
+        },
+        {
+          "name": "keyword.control.exception.bsl",
+          "match": "(?i:(?\u003c=[^\\wа-яё\\.]|^)(Попытка|Исключение|КонецПопытки|ВызватьИсключение)(?=[^\\wа-яё\\.]|$))"
+        },
+        {
+          "name": "keyword.control.repeat.bsl",
+          "match": "(?i:(?\u003c=[^\\wа-яё\\.]|^)(Пока|Для|Каждого|Из|Цикл|КонецЦикла)(?=[^\\wа-яё\\.]|$))"
+        }
+      ]
+    },
+    "developerCommentLine": {
+      "patterns": [
+        {
+          "match": "\\s*(//\\s*(?:-\u003e{3}|\u003c{3}-)\\s+.*)$",
+          "captures": {
+            "1": {
+              "name": "comment.line.developer.bsl"
+            }
+          }
+        },
+        {
+          "match": "\\s*(//\\s*(?:\\{{3}|\\}{3})\\s+.*)$",
+          "captures": {
+            "1": {
+              "name": "comment.line.developer.bsl"
+            }
+          }
+        },
+        {
+          "match": "\\s*(//\\s*(?:\\+{3}|-{3})\\s+.*)$",
+          "captures": {
+            "1": {
+              "name": "comment.line.developer.bsl"
+            }
+          }
+        },
+        {
+          "match": "\\s*(//.*(?:\\+{2}|-{2})\\s*)$",
+          "captures": {
+            "1": {
+              "name": "comment.line.developer.bsl"
+            }
+          }
+        }
+      ]
+    },
+    "docParametersBlock": {
+      "name": "meta.documentation.parameters.bsl",
+      "begin": "^\\s*(//\\s*)([Пп]араметры:)",
+      "end": "(?=^\\s*//\\s*[Вв]озвращаемое значение:|^(?!\\s*//))",
+      "patterns": [
+        {
+          "include": "#_docParametersBlockArgs"
+        },
+        {
+          "include": "#commentLine"
+        }
+      ],
+      "beginCaptures": {
+        "1": {
+          "name": "comment.line.double-slash.bsl"
+        },
+        "2": {
+          "name": "keyword.control.documentation.bsl"
+        }
+      }
+    },
+    "docReturnsBlock": {
+      "name": "meta.documentation.returns.bsl",
+      "begin": "^\\s*(//\\s*)([Вв]озвращаемое значение:)",
+      "end": "(?=^(?!\\s*//))",
+      "patterns": [
+        {
+          "include": "#_docReturnsBlockArgs"
+        },
+        {
+          "include": "#_docParametersBlockArgs"
+        },
+        {
+          "include": "#commentLine"
+        }
+      ],
+      "beginCaptures": {
+        "1": {
+          "name": "comment.line.double-slash.bsl"
+        },
+        "2": {
+          "name": "keyword.control.documentation.bsl"
+        }
+      }
+    },
+    "extensionRegions": {
+      "patterns": [
+        {
+          "name": "keyword.control.region.past.bsl",
+          "match": "(?i)(#[Вв]ставка\\b)\\s*(//.*)?$",
+          "captures": {
+            "1": {
+              "name": "keyword.control.region.past.start.bsl"
+            },
+            "2": {
+              "name": "comment.line.double-slash.bsl"
+            }
+          }
+        },
+        {
+          "name": "keyword.control.region.past.bsl",
+          "match": "(?i)(#[Кк]онец[Вв]ставки\\b)\\s*(//.*)?$",
+          "captures": {
+            "1": {
+              "name": "keyword.control.region.past.end.bsl"
+            },
+            "2": {
+              "name": "comment.line.double-slash.bsl"
+            }
+          }
+        },
+        {
+          "name": "keyword.control.region.del.bsl",
+          "match": "(?i)(#[Уу]даление\\b)\\s*(//.*)?$",
+          "captures": {
+            "1": {
+              "name": "keyword.control.region.del.start.bsl"
+            },
+            "2": {
+              "name": "comment.line.double-slash.bsl"
+            }
+          }
+        },
+        {
+          "name": "keyword.control.region.past.del.bsl",
+          "match": "(?i)(#[Кк]онец[Уу]даления\\b)\\s*(//.*)?$",
+          "captures": {
+            "1": {
+              "name": "keyword.control.region.del.end.bsl"
+            },
+            "2": {
+              "name": "comment.line.double-slash.bsl"
+            }
+          }
+        }
+      ]
+    },
+    "functionDefinition": {
+      "begin": "(?i:(Асинх)\\s+)?(Процедура|Функция)\\s+([_$[:alpha:]][_$[:alnum:]]*)\\s*(\\()",
+      "end": "(?i:(\\))\\s*((Экспорт)(?=[^\\wа-яё\\.]|$))?)",
+      "patterns": [
+        {
+          "include": "#annotations"
+        },
+        {
+          "include": "#basic"
+        },
+        {
+          "name": "storage.modifier.bsl",
+          "match": "(?i:(?\u003c=[^\\wа-яё\\.]|^)(Знач)(?=[^\\wа-яё\\.]|$))"
+        },
+        {
+          "name": "invalid.illegal.bsl",
+          "match": "(?\u003c=[^\\wа-яё\\.]|^)((?\u003c==)(?i)[a-zа-яё0-9_]+)(?=[^\\wа-яё\\.]|$)"
+        },
+        {
+          "name": "invalid.illegal.bsl",
+          "match": "(?\u003c=[^\\wа-яё\\.]|^)((?\u003c==\\s)\\s*(?i)[a-zа-яё0-9_]+)(?=[^\\wа-яё\\.]|$)"
+        },
+        {
+          "include": "#miscellaneous"
+        },
+        {
+          "include": "#blockEntities"
+        },
+        {
+          "name": "variable.parameter.bsl",
+          "match": "(?i:[a-zа-яё0-9_]+)"
+        }
+      ],
+      "beginCaptures": {
+        "1": {
+          "name": "storage.modifier.async.bsl"
+        },
+        "2": {
+          "name": "storage.type.bsl"
+        },
+        "3": {
+          "name": "entity.name.function.bsl"
+        },
+        "4": {
+          "name": "punctuation.bracket.begin.bsl"
+        }
+      },
+      "endCaptures": {
+        "1": {
+          "name": "punctuation.bracket.end.bsl"
+        },
+        "2": {
+          "name": "storage.modifier.bsl"
+        }
+      }
+    },
+    "functionDocumentation": {
+      "name": "meta.documentation.block.bsl",
+      "begin": "^\\s*(?=(//\\s*)([Пп]араметры|[Вв]озвращаемое значение):)",
+      "end": "(?=^(?!\\s*//))",
+      "patterns": [
+        {
+          "include": "#docParametersBlock"
+        },
+        {
+          "include": "#docReturnsBlock"
+        }
+      ]
+    },
+    "functionEnd": {
+      "begin": "(?i)(КонецПроцедуры|КонецФункции)",
+      "end": "$",
+      "patterns": [
+        {
+          "include": "#commentLine"
+        }
+      ],
+      "beginCaptures": {
+        "1": {
+          "name": "storage.type.bsl"
+        }
+      }
+    },
+    "logicalOperators": {
+      "patterns": [
+        {
+          "include": "#developerCommentLine"
+        },
+        {
+          "name": "keyword.operator.logical.bsl",
+          "match": "(?i:(?\u003c=[^\\wа-яё\\.]|^)(И|ИЛИ|НЕ)(?=[^\\wа-яё\\.]|$))"
+        }
+      ]
+    },
+    "mainRegion": {
+      "patterns": [
+        {
+          "include": "#mainRegionStart"
+        },
+        {
+          "include": "#mainRegionEnd"
+        }
+      ]
+    },
+    "mainRegionEnd": {
+      "match": "(?i)(#(КонецОбласти))(?:(\\\\s+//\\\\s*)([\\\\wа-яёА-ЯЁ]+)?)?",
+      "patterns": [
+        {
+          "include": "#commentLine"
+        }
+      ],
+      "captures": {
+        "1": {
+          "name": "keyword.other.section.bsl"
+        },
+        "3": {
+          "name": "comment.line.double-slash.bsl"
+        },
+        "4": {
+          "name": "entity.name.section.bsl"
+        }
+      }
+    },
+    "mainRegionStart": {
+      "begin": "(?i)(#(Область))(?:\\\\s+([\\\\wа-яёА-ЯЁ]+))?",
+      "end": "$",
+      "patterns": [
+        {
+          "include": "#commentLine"
+        }
+      ],
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.other.section.bsl"
+        },
+        "3": {
+          "name": "entity.name.section.bsl"
+        }
+      }
+    },
+    "miscellaneous": {
+      "patterns": [
+        {
+          "include": "#supportOperators"
+        },
+        {
+          "include": "#objectDefinition"
+        },
+        {
+          "include": "#supportFunctions"
+        },
+        {
+          "include": "#supportEnums"
+        },
+        {
+          "include": "#supportClasses"
+        },
+        {
+          "include": "#supportValueTypes"
+        },
+        {
+          "include": "#supportLanguageConstant"
+        }
+      ]
+    },
+    "objectDefinition": {
+      "patterns": [
+        {
+          "match": "(?i:(Новый)\\s+)([_$[:alpha:]][_$[:alnum:]]*)",
+          "captures": {
+            "1": {
+              "name": "keyword.operator.new.bsl"
+            },
+            "2": {
+              "name": "support.class.bsl"
+            }
+          }
+        },
+        {
+          "begin": "(?i:(Новый)\\s+)([_$[:alpha:]][_$[:alnum:]]*)(?:\\s*)(\\()\\s*",
+          "end": "\\s*(\\))",
+          "patterns": [
+            {
+              "include": "#miscellaneous"
+            },
+            {
+              "include": "#blockEntities"
+            },
+            {
+              "include": "#basic"
+            }
+          ],
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.operator.new.bsl"
+            },
+            "2": {
+              "name": "support.class.bsl"
+            },
+            "3": {
+              "name": "punctuation.bracket.begin.bsl"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "punctuation.bracket.end.bsl"
+            }
+          }
+        }
+      ]
+    },
+    "query": {
+      "begin": "(?i)(?\u003c=[^\\\\wа-яё\\\\.]|^)(Выбрать(\\\\s+Разрешенные)?(\\\\s+Различные)?(\\\\s+Первые)?)(?=[^\\\\wа-яё\\\\.]|$)",
+      "end": "(?=\\\\\"[^\\\\\"])",
+      "patterns": [
+        {
+          "name": "comment.line.double-slash.sdbl",
+          "match": "(//((\"\")|[^\"])*)"
+        },
+        {
+          "include": "#extensionRegions"
+        },
+        {
+          "name": "string.quoted.double.sdbl",
+          "match": "\"\"[^\"]*\"\""
+        },
+        {
+          "include": "#source.sdbl"
+        },
+        {
+          "name": "comment.line.double-slash.bsl",
+          "begin": "^\\s*//",
+          "end": "$"
+        }
+      ],
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control.sdbl"
+        }
+      }
+    },
+    "quotedString": {
+      "begin": "(\")",
+      "end": "(\")(?![\")",
+      "patterns": [
+        {
+          "include": "#quotedStringBody"
+        }
+      ],
+      "beginCaptures": {
+        "1": {
+          "name": "string.quoted.double.bsl"
+        }
+      },
+      "endCaptures": {
+        "1": {
+          "name": "string.quoted.double.bsl"
+        }
+      }
+    },
+    "quotedStringBody": {
+      "patterns": [
+        {
+          "include": "#query"
+        },
+        {
+          "name": "constant.character.escape.bsl",
+          "match": "\"\""
+        },
+        {
+          "name": "comment.line.double-slash.bsl",
+          "match": "(^\\s*//.*$)"
+        },
+        {
+          "include": "#stringPatternParameter"
+        },
+        {
+          "name": "string.quoted.double.bsl",
+          "match": "[^\"]"
+        }
+      ]
+    },
+    "storageModifiers": {
+      "name": "storage.modifier.directive.bsl",
+      "match": "(?i:\u0026(НаКлиенте((НаСервере(БезКонтекста)?)?)|НаСервере(БезКонтекста)?))"
+    },
+    "stringPatternParameter": {
+      "patterns": [
+        {
+          "name": "variable.parameter.bsl",
+          "match": "%[0-9]+"
+        }
+      ]
+    },
+    "stringSupportValues": {
+      "patterns": [
+        {
+          "begin": "(?i:)(\")(Документ|Справочник|Перечисление)\\b(?=(?:\\s*\\.\\s*[_$[:alpha:]][_$[:alnum:]]*\\s*)+)",
+          "end": "(?\u003c!\"\\s*)(\")(?!\"\\s*\")",
+          "patterns": [
+            {
+              "include": "#blockObjectProperties"
+            }
+          ],
+          "beginCaptures": {
+            "1": {
+              "name": "string.quoted.double.bsl"
+            },
+            "2": {
+              "name": "support.class.bsl"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "string.quoted.double.bsl"
+            }
+          }
+        }
+      ]
+    },
+    "stringWithSingleSupportValue": {
+      "patterns": [
+        {
+          "begin": "(?i:)(?\u003c=\\b(?:ПредопределенноеЗначение|Тип)\\s*\\(\\s*)((?:\"|$))(?!\\s*\")",
+          "end": "(?\u003c!\"\\s*)(\")(?!\")(?=\\))",
+          "patterns": [
+            {
+              "name": "string.quoted.double.bsl",
+              "match": "(?\u003c=^\\s*)\"(?!\\s*\")"
+            },
+            {
+              "include": "#_stringInnerSupports"
+            }
+          ],
+          "beginCaptures": {
+            "1": {
+              "name": "string.quoted.double.bsl"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "string.quoted.double.bsl"
+            }
+          }
+        },
+        {
+          "begin": "(?i:)(?\u003c=\\b(?:ОписаниеОповещения)\\s*\\(\\s*)(\")(?!\"\\s*\")",
+          "end": "(?\u003c!\"\\s*)(\")(?!\")",
+          "patterns": [
+            {
+              "name": "entity.name.function.bsl",
+              "match": "(?\u003c=\\(\\s*\")\\b([_$[:alpha:]][_$[:alnum:]]*)\\b(?=\")"
+            }
+          ],
+          "beginCaptures": {
+            "1": {
+              "name": "string.quoted.double.bsl"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "string.quoted.double.bsl"
+            }
+          }
+        },
+        {
+          "begin": "(?i:)(?\u003c=\\b(?:ОписаниеОповещения)\\b\\s*\\(\\s*)$",
+          "end": "(?\u003c=\\S)(\")(?!\")",
+          "patterns": [
+            {
+              "name": "string.quoted.double.bsl",
+              "match": "(?\u003c=^\\s*)\"(?!\\s*\")"
+            },
+            {
+              "name": "entity.name.function.bsl",
+              "match": "(?\u003c=^\\s*\")\\b([_$[:alpha:]][_$[:alnum:]]*)\\b(?=\")"
+            }
+          ],
+          "endCaptures": {
+            "1": {
+              "name": "string.quoted.double.bsl"
+            }
+          }
+        },
+        {
+          "begin": "(?\u003c!\"\\s*)(\")(?=[_$[:alpha:]][_$[:alnum:]]*\")(?!\"\\s*\")",
+          "end": "(?\u003c!\"\\s*)(\")(?!\"\\s*\")",
+          "patterns": [
+            {
+              "include": "#_stringInnerSupports"
+            },
+            {
+              "include": "#quotedStringBody"
+            }
+          ],
+          "beginCaptures": {
+            "1": {
+              "name": "string.quoted.double.bsl"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "string.quoted.double.bsl"
+            }
+          }
+        }
+      ]
+    },
+    "supportClasses": {
+      "patterns": [
+        {
+          "include": "#supportRegisterTable"
+        },
+        {
+          "name": "support.class.bsl",
+          "match": "(?i:)(?\u003c![\\.\\)\\]]\\s*)\\b(WSСсылки|БиблиотекаКартинок|БиблиотекаМакетовОформленияКомпоновкиДанных|БиблиотекаСтилей|БизнесПроцессы|ВнешниеИсточникиДанных|ВнешниеОбработки|ВнешниеОтчеты|Документы|ДоставляемыеУведомления|ЖурналыДокументов|Задачи|ИнформацияОбИнтернетСоединении|ИспользованиеРабочейДаты|ИсторияРаботыПользователя|Константы|КритерииОтбора|Метаданные|Обработки|ОтправкаДоставляемыхУведомлений|Отчеты|ПараметрыСеанса|Перечисления|ПланыВидовРасчета|ПланыВидовХарактеристик|ПланыОбмена|ПланыСчетов|ПолнотекстовыйПоиск|ПользователиИнформационнойБазы|Последовательности|РасширенияКонфигурации|РегистрыБухгалтерии|РегистрыНакопления|РегистрыРасчета|РегистрыСведений|РегламентныеЗадания|СериализаторXDTO|Справочники|СредстваГеопозиционирования|СредстваКриптографии|СредстваМультимедиа|СредстваОтображенияРекламы|СредстваПочты|СредстваТелефонии|ФабрикаXDTO|ФайловыеПотоки|ФоновыеЗадания|ХранилищаНастроек|ВстроенныеПокупки|ОтображениеРекламы|ПанельЗадачОС|ПроверкаВстроенныхПокупок)\\b(?=\\s*\\.)"
+        },
+        {
+          "name": "support.class.bsl",
+          "match": "(?i:)(?\u003c![\\.\\)\\]]\\s*)\\b(ОбработкаОшибок)\\b(?=\\s*\\.)"
+        }
+      ]
+    },
+    "supportEnums": {
+      "patterns": [
+        {
+          "name": "support.class.bsl",
+          "match": "(?i:)(?\u003c![\\.\\)\\]]\\s*)\\b(ОбходРезультатаЗапроса)\\b(?=\\s*\\.)"
+        },
+        {
+          "name": "support.class.bsl",
+          "match": "(?i:)(?\u003c![\\.\\)\\]]\\s*)\\b(РежимЗаписиДокумента|РежимПроведенияДокумента)\\b(?=\\s*\\.)"
+        },
+        {
+          "name": "support.class.bsl",
+          "match": "(?i:)(?\u003c![\\.\\)\\]]\\s*)\\b(РежимДиалогаВопрос|КодВозвратаДиалога)\\b(?=\\s*\\.)"
+        },
+        {
+          "name": "support.class.bsl",
+          "match": "(?i:)(?\u003c![\\.\\)\\]]\\s*)\\b(ВидДвиженияНакопления|ВидПериодаРегистраРасчета)\\b(?=\\s*\\.)"
+        },
+        {
+          "name": "support.class.bsl",
+          "match": "(?i:)(?\u003c![\\.\\)\\]]\\s*)\\b(РежимБлокировкиДанных|ВидГраницы)\\b(?=\\s*\\.)"
+        }
+      ]
+    },
+    "supportFunctions": {
+      "patterns": [
+        {
+          "name": "support.function.bsl",
+          "match": "(?x)(?i:(?\u003c=[^\\wа-яё\\.]|^)(СтрДлина|СокрЛ|СокрП|СокрЛП|Лев|Прав|Сред|СтрНайти|ВРег|НРег|ТРег|Символ|КодСимвола|ПустаяСтрока|СтрЗаменить|СтрЧислоСтрок|СтрПолучитьСтроку|СтрЧислоВхождений|СтрСравнить|СтрНачинаетсяС|СтрЗаканчиваетсяНа|СтрРазделить|СтрСоединить|Цел|Окр|ACos|ASin|ATan|Cos|Exp|Log|Log10|Pow|Sin|Sqrt|Tan|Год|Месяц|День|Час|Минута|Секунда|ТекущаяДата|НачалоГода|НачалоДня|НачалоКвартала|НачалоМесяца|НачалоМинуты|НачалоНедели|НачалоЧаса|КонецГода|КонецДня|КонецКвартала|КонецМесяца|КонецМинуты|КонецНедели|КонецЧаса|НеделяГода|ДеньГода|ДеньНедели|ДобавитьМесяц|Тип|ТипЗнч|Булево|Число|Строка|Дата|ПоказатьВопрос|Вопрос|ПоказатьПредупреждение|Предупреждение|Сообщить|ПоказатьЗначение|ОткрытьЗначение|Оповестить|ОчиститьСообщения|ОповеститьОбИзменении|Состояние|Сигнал|ОбработкаПрерыванияПользователя|ОткрытьСодержаниеСправки|ОткрытьИндексСправки|ОткрытьСправку|ПоказатьИнформациюОбОшибке|КраткоеПредставлениеОшибки|ПодробноеПредставлениеОшибки|ПолучитьФорму|ЗакрытьСправку|ПоказатьОповещениеПользователя|ОткрытьФорму|ОткрытьФормуМодально|АктивноеОкно|ВыполнитьОбработкуОповещения|ПоказатьВводЗначения|ВвестиЗначение|ПоказатьВводЧисла|ВвестиЧисло|ПоказатьВводСтроки|ВвестиСтроку|ПоказатьВводДаты|ВвестиДату|Формат|ЧислоПрописью|НСтр|ПредставлениеПериода|СтрШаблон|СтрЗаменитьПоРегулярномуВыражению|ПолучитьОбщийМакет|ПолучитьОбщуюФорму|ПредопределенноеЗначение|ПолучитьПолноеИмяПредопределенногоЗначения|КопироватьФайл|ПереместитьФайл|УдалитьФайлы|НайтиФайлы|СоздатьКаталог|ПолучитьИмяВременногоФайла|РазделитьФайл|ОбъединитьФайлы|ПолучитьФайл|НачатьПомещениеФайла|ПоместитьФайл|ЭтоАдресВременногоХранилища|УдалитьИзВременногоХранилища|ПолучитьИзВременногоХранилища|ПоместитьВоВременноеХранилище|ПодключитьРасширениеРаботыСФайлами|НачатьУстановкуРасширенияРаботыСФайлами|УстановитьРасширениеРаботыСФайлами|ПолучитьФайлы|ПоместитьФайлы|ЗапроситьРазрешениеПользователя|ПолучитьМаскуВсеФайлы|ПолучитьМаскуВсеФайлыКлиента|ПолучитьМаскуВсеФайлыСервера|ПолучитьРазделительПути|ПолучитьРазделительПутиКлиента|ПолучитьРазделительПутиСервера|НачатьПодключениеРасширенияРаботыСФайлами|НачатьЗапросРазрешенияПользователя|НачатьПоискФайлов|НачатьСозданиеКаталога|НачатьКопированиеФайла|НачатьПеремещениеФайла|НачатьУдалениеФайлов|НачатьПолучениеФайлов|НачатьПомещениеФайлов|НачатьСозданиеДвоичныхДанныхИзФайла|НачатьТранзакцию|ЗафиксироватьТранзакцию|ОтменитьТранзакцию|ПолучитьОперативнуюОтметкуВремени|ТранзакцияАктивна|УстановитьМонопольныйРежим|МонопольныйРежим|ПолучитьСоединенияИнформационнойБазы|НомерСоединенияИнформационнойБазы|КонфигурацияИзменена|КонфигурацияБазыДанныхИзмененаДинамически|УстановитьВремяОжиданияБлокировкиДанных|ОбновитьНумерациюОбъектов|ПолучитьВремяОжиданияБлокировкиДанных|КодЛокализацииИнформационнойБазы|УстановитьМинимальнуюДлинуПаролейПользователей|ПолучитьМинимальнуюДлинуПаролейПользователей|ИнициализироватьПредопределенныеДанные|УдалитьДанныеИнформационнойБазы|УстановитьПроверкуСложностиПаролейПользователей|ПолучитьПроверкуСложностиПаролейПользователей|ПолучитьСтруктуруХраненияБазыДанных|УстановитьПривилегированныйРежим|ПривилегированныйРежим|НеобходимостьЗавершенияСоединения|НомерСеансаИнформационнойБазы|ПолучитьСеансыИнформационнойБазы|ЗаблокироватьДанныеДляРедактирования|УстановитьСоединениеСВнешнимИсточникомДанных|РазблокироватьДанныеДляРедактирования|РазорватьСоединениеСВнешнимИсточникомДанных|ПолучитьБлокировкуСеансов|УстановитьБлокировкуСеансов|ОбновитьПовторноИспользуемыеЗначения|УстановитьБезопасныйРежим|БезопасныйРежим|ПолучитьДанныеВыбора|УстановитьЧасовойПоясИнформационнойБазы|ПолучитьЧасовойПоясИнформационнойБазы|ПолучитьОбновлениеКонфигурацииБазыДанных|УстановитьБезопасныйРежимРазделенияДанных|БезопасныйРежимРазделенияДанных|УстановитьВремяЗасыпанияПассивногоСеанса|ПолучитьВремяЗасыпанияПассивногоСеанса|УстановитьВремяЗавершенияСпящегоСеанса|ПолучитьВремяЗавершенияСпящегоСеанса|ПолучитьТекущийСеансИнформационнойБазы|ПолучитьИдентификаторКонфигурации|УстановитьНастройкиКлиентаЛицензирования|ПолучитьИмяКлиентаЛицензирования|ПолучитьДополнительныйПараметрКлиентаЛицензирования|ПолучитьОтключениеБезопасногоРежима|УстановитьОтключениеБезопасногоРежима|XMLСтрока|XMLЗначение|XMLТип|XMLТипЗнч|ИзXMLТипа|ВозможностьЧтенияXML|ПолучитьXMLТип|ПрочитатьXML|ЗаписатьXML|НайтиНедопустимыеСимволыXML|ИмпортМоделиXDTO|СоздатьФабрикуXDTO|ЗаписатьJSON|ПрочитатьJSON|ПрочитатьЗначениеJSON|ЗаписатьЗначениеJSON|ПрочитатьДатуJSON|ЗаписатьДатуJSON|ПолучитьЗаголовокСистемы|ПолучитьСкоростьКлиентскогоСоединения|ПодключитьОбработчикОжидания|УстановитьЗаголовокСистемы|ОтключитьОбработчикОжидания|ИмяКомпьютера|ЗавершитьРаботуСистемы|ИмяПользователя|ПрекратитьРаботуСистемы|ПолноеИмяПользователя|ЗаблокироватьРаботуПользователя|КаталогПрограммы|КаталогВременныхФайлов|ПравоДоступа|РольДоступна|ТекущийЯзык|ТекущийКодЛокализации|СтрокаСоединенияИнформационнойБазы|ПодключитьОбработчикОповещения|ОтключитьОбработчикОповещения|ПолучитьСообщенияПользователю|ПараметрыДоступа|ПредставлениеПриложения|ТекущийЯзыкСистемы|ЗапуститьСистему|ТекущийРежимЗапуска|УстановитьЧасовойПоясСеанса|ЧасовойПоясСеанса|ТекущаяДатаСеанса|УстановитьКраткийЗаголовокПриложения|ПолучитьКраткийЗаголовокПриложения|ПредставлениеПрава|ВыполнитьПроверкуПравДоступа|РабочийКаталогДанныхПользователя|КаталогДокументов|ПолучитьИнформациюЭкрановКлиента|ТекущийВариантОсновногоШрифтаКлиентскогоПриложения|ТекущийВариантИнтерфейсаКлиентскогоПриложения|УстановитьЗаголовокКлиентскогоПриложения|ПолучитьЗаголовокКлиентскогоПриложения|НачатьПолучениеКаталогаВременныхФайлов|НачатьПолучениеКаталогаДокументов|НачатьПолучениеРабочегоКаталогаДанныхПользователя|ПодключитьОбработчикЗапросаНастроекКлиентаЛицензирования|ОтключитьОбработчикЗапросаНастроекКлиентаЛицензирования|КаталогБиблиотекиМобильногоУстройства|ЗначениеВСтрокуВнутр|ЗначениеИзСтрокиВнутр|ЗначениеВФайл|ЗначениеИзФайла|КомандаСистемы|ЗапуститьПриложение|ПолучитьCOMОбъект|ПользователиОС|НачатьЗапускПриложения|ПодключитьВнешнююКомпоненту|НачатьУстановкуВнешнейКомпоненты|УстановитьВнешнююКомпоненту|НачатьПодключениеВнешнейКомпоненты|НайтиПомеченныеНаУдаление|НайтиПоСсылкам|УдалитьОбъекты|УстановитьОбновлениеПредопределенныхДанныхИнформационнойБазы|ПолучитьОбновлениеПредопределенныхДанныхИнформационнойБазы|ЗаписьЖурналаРегистрации|ПолучитьИспользованиеЖурналаРегистрации|УстановитьИспользованиеЖурналаРегистрации|ПредставлениеСобытияЖурналаРегистрации|ВыгрузитьЖурналРегистрации|ПолучитьЗначенияОтбораЖурналаРегистрации|УстановитьИспользованиеСобытияЖурналаРегистрации|ПолучитьИспользованиеСобытияЖурналаРегистрации|СкопироватьЖурналРегистрации|ОчиститьЖурналРегистрации|ЗначениеВДанныеФормы|ДанныеФормыВЗначение|КопироватьДанныеФормы|УстановитьСоответствиеОбъектаИФормы|ПолучитьСоответствиеОбъектаИФормы|ПолучитьФункциональнуюОпцию|ПолучитьФункциональнуюОпциюИнтерфейса|УстановитьПараметрыФункциональныхОпцийИнтерфейса|ПолучитьПараметрыФункциональныхОпцийИнтерфейса|ОбновитьИнтерфейс|УстановитьРасширениеРаботыСКриптографией|НачатьУстановкуРасширенияРаботыСКриптографией|ПодключитьРасширениеРаботыСКриптографией|НачатьПодключениеРасширенияРаботыСКриптографией|УстановитьСоставСтандартногоИнтерфейсаOData|ПолучитьСоставСтандартногоИнтерфейсаOData|СоединитьБуферыДвоичныхДанных|ПередНачаломРаботыСистемы|ПриНачалеРаботыСистемы|ПередЗавершениемРаботыСистемы|ПриЗавершенииРаботыСистемы|ОбработкаВнешнегоСобытия|УстановкаПараметровСеанса|ПриИзмененииПараметровЭкрана|ВвестиДатуАсинх|ВопросАсинх|НайтиФайлыАсинх|Мин|Макс|ОписаниеОшибки|Вычислить|ИнформацияОбОшибке|Base64Значение|Base64Строка|ЗаполнитьЗначенияСвойств|ЗначениеЗаполнено)\\s*(?=\\())"
+        }
+      ]
+    },
+    "supportLanguageConstant": {
+      "patterns": [
+        {
+          "name": "constant.language.bsl",
+          "match": "(?i:)(?\u003c![\\.\\)\\]]\\s*)\\b(ЭтотОбъект|ЭтаФорма)\\b"
+        }
+      ]
+    },
+    "supportOperators": {
+      "patterns": [
+        {
+          "include": "#logicalOperators"
+        },
+        {
+          "name": "keyword.operator.comparison.bsl",
+          "match": "=|\u003c\u003e|\u003c|\u003c=|\u003e|=\u003e"
+        },
+        {
+          "name": "keyword.operator.arithmetic.bsl",
+          "match": "\\+|-|\\*|/|%"
+        },
+        {
+          "name": "keyword.operator.bsl",
+          "match": "\\?|;"
+        }
+      ]
+    },
+    "supportRegisterTable": {
+      "patterns": [
+        {
+          "name": "support.class.bsl",
+          "match": "(?i:)(?\u003c![\\.\\)\\]]\\s*)\\b(Регистры(?:Накопления|Сведений|Бухгалтерии))\\b(?=\\s*\\.)"
+        }
+      ]
+    },
+    "supportValueTypes": {
+      "patterns": [
+        {
+          "name": "support.type.bsl",
+          "match": "\\b(?i:Строка|Дата|Структура|ФиксированнаяСтруктура|Массив|ФиксированныйМассив|Соответствие|ФиксированноеСоответствие|Дерево|ТаблицаЗначений)\\b"
+        }
+      ]
+    },
+    "variableAssignment": {
+      "name": "meta.var-single-variable.bsl",
+      "begin": "(?i:(?\u003c=;|^)\\s*([\\wа-яё]+))\\s*(=)",
+      "end": "(?i:(?=(;|Иначе|Конец)))",
+      "patterns": [
+        {
+          "include": "#basic"
+        },
+        {
+          "include": "#miscellaneous"
+        },
+        {
+          "include": "#blockEntities"
+        }
+      ],
+      "beginCaptures": {
+        "1": {
+          "name": "variable.assignment.bsl"
+        },
+        "2": {
+          "name": "keyword.operator.assignment.bsl"
+        }
+      }
+    },
+    "variableDefinition": {
+      "begin": "(?i:(?\u003c=[^\\wа-яё\\.]|^)(Перем)\\s+([a-zа-яё0-9_]+)\\s*)",
+      "end": "(;)",
+      "patterns": [
+        {
+          "name": "keyword.operator.bsl",
+          "match": "(;)"
+        },
+        {
+          "name": "storage.modifier.bsl",
+          "match": "(?i:(?\u003c=[^\\wа-яё\\.]|^)(Экспорт)(?=[^\\wа-яё\\.]|$))"
+        }
+      ],
+      "beginCaptures": {
+        "1": {
+          "name": "storage.type.var.bsl"
+        },
+        "2": {
+          "name": "variable.bsl"
+        }
+      },
+      "endCaptures": {
+        "1": {
+          "name": "keyword.operator.bsl"
+        }
+      }
+    }
+  }
+}
