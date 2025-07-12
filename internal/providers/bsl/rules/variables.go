@@ -24,17 +24,17 @@ func VariableDefinition() *models.Rule {
 	patterns := []*models.Rule{
 		{
 			Name:  "keyword.operator.bsl",
-			Match: fmt.Sprintf(`(%s)`, bslm.BslSemicolon),
+			Match: `(;)`,
 		},
 		{
 			Name:  "storage.modifier.bsl",
-			Match: fmt.Sprintf(`(?i:(?<=[^\wа-яё\.]|^)(%s)(?=[^\wа-яё\.]|$))`, bslm.BslExport),
+			Match: fmt.Sprintf(`(?i:%s(%s)%s)`, bslm.WordBoundaryLookBehind, bslm.BslExport, bslm.WordBoundaryLookAhead),
 		},
 	}
 
 	rule := newRule(VariableDefinitionKey(), patterns)
-	rule.Begin = fmt.Sprintf(`(?i:(?<=[^\wа-яё\.]|^)(%s)\s+([a-zа-яё0-9_]+)\s*)`, bslm.BslVar)
-	rule.End = fmt.Sprintf(`(%s)`, bslm.BslSemicolon)
+	rule.Begin = fmt.Sprintf(`(?i:%s(%s)\s+(%s)\s*)`, bslm.WordBoundaryLookBehind, bslm.BslVar, bslm.IdentifierWithCyrillic)
+	rule.End = `(;)`
 	rule.BeginCaptures = map[string]models.Capture{
 		"1": {Name: "storage.type.var.bsl"},
 		"2": {Name: "variable.bsl"},
@@ -68,7 +68,7 @@ func Annotations() *models.Rule {
 				"1": {Name: "storage.type.annotation.bsl"},
 				"3": {Name: "punctuation.bracket.begin.bsl"},
 			},
-			End: fmt.Sprintf(`(%s)`, bslm.BslParenClose),
+			End: `(\))`,
 			EndCaptures: map[string]models.Capture{
 				"1": {Name: "punctuation.bracket.end.bsl"},
 			},
@@ -76,19 +76,19 @@ func Annotations() *models.Rule {
 				bslm.KeyBasic.IncludeRef(),
 				{
 					Name:  "keyword.operator.assignment.bsl",
-					Match: fmt.Sprintf(`(%s)`, bslm.BslEqual),
+					Match: `(=)`,
 				},
 				{
 					Name:  "invalid.illegal.bsl",
-					Match: `(?<=[^\wа-яё\.]|^)((?<==)(?i)[a-zа-яё0-9_]+)(?=[^\wа-яё\.]|$)`,
+					Match: fmt.Sprintf(`%s((?<==)(?i)%s)%s`, bslm.WordBoundaryLookBehind, bslm.IdentifierWithCyrillic, bslm.WordBoundaryLookAhead),
 				},
 				{
 					Name:  "invalid.illegal.bsl",
-					Match: `(?<=[^\wа-яё\.]|^)((?<==\s)\s*(?i)[a-zа-яё0-9_]+)(?=[^\wа-яё\.]|$)`,
+					Match: fmt.Sprintf(`%s((?<==\s)\s*(?i)%s)%s`, bslm.WordBoundaryLookBehind, bslm.IdentifierWithCyrillic, bslm.WordBoundaryLookAhead),
 				},
 				{
 					Name:  "variable.annotation.bsl",
-					Match: `(?i)[a-zа-яё0-9_]+`,
+					Match: bslm.IdentifierWithCyrillicCaseInsensitive,
 				},
 			},
 		},

@@ -60,7 +60,7 @@ func BlockEntities() *models.Rule {
 func BlockVariables() *models.Rule {
 	patterns := []*models.Rule{
 		{
-			Match: `\b([_$[:alpha:]][_$[:alnum:]]*)\b(?=[\s*\[]?)(?![\()])`,
+			Match: fmt.Sprintf(`\b(%s)\b(?=[\s*\[]?)(?![\\(])`, bslm.Identifier),
 			Captures: map[string]models.Capture{
 				"1": {Name: "variable.other.readwrite.bsl, entity.name.variable.bsl"},
 			},
@@ -74,13 +74,13 @@ func BlockVariables() *models.Rule {
 func BlockFunctions() *models.Rule {
 	patterns := []*models.Rule{
 		{
-			Begin: fmt.Sprintf(`(?<!(?i:%s|New)\s+)(?:\s*(\.)\s*)?\b([_$[:alpha:]][_$[:alnum:]]*\b)(?:\s*)(%s)\s*`, bslm.BslNew, bslm.BslParenOpen),
+			Begin: fmt.Sprintf(`(?<!(?i:%s)\s+)(?:\s*(\.)\s*)?\b(%s\b)(?:\s*)(\()\s*`, bslm.BslNew, bslm.Identifier),
 			BeginCaptures: map[string]models.Capture{
 				"1": {Name: "punctuation.accessor.bsl"},
 				"2": {Name: "entity.name.function.bsl"},
 				"3": {Name: "punctuation.bracket.begin.bsl"},
 			},
-			End: fmt.Sprintf(`\s*(%s)`, bslm.BslParenClose),
+			End: `\s*(\))`,
 			EndCaptures: map[string]models.Capture{
 				"1": {Name: "punctuation.bracket.end.bsl"},
 			},
@@ -106,7 +106,7 @@ func BlockObjectProperties() *models.Rule {
 			},
 		},
 		{
-			Match: `(?<=(?:\b[_$[:alpha:]][_$[:alnum:]]*\s*)|(?:[\s\]]*))(\\.)(?:\s*)([_$[:alpha:]][_$[:alnum:]]*\b)(?:\s*)(?=[\[]?)(?!\s*\()`,
+			Match: fmt.Sprintf(`(?<=(?:\b%s\s*)|(?:[\s\]]*))(\.)(?:\s*)(%s\b)(?:\s*)(?=[\[]?)(?!\s*\()`, bslm.Identifier, bslm.Identifier),
 			Captures: map[string]models.Capture{
 				"1": {Name: "punctuation.accessor.bsl"},
 				"2": {Name: "variable.other.property.bsl"},
@@ -126,8 +126,8 @@ func ArrayLiteral() *models.Rule {
 
 	rule := newRule(ArrayLiteralKey(), patterns)
 	rule.Name = "meta.array.literal.bsl"
-	rule.Begin = fmt.Sprintf(`\s*(%s)`, bslm.BslSquareOpen)
-	rule.End = fmt.Sprintf(`%s`, bslm.BslSquareClose)
+	rule.Begin = `\s*(\[)`
+	rule.End = `\]`
 	rule.BeginCaptures = map[string]models.Capture{
 		"1": {Name: "meta.brace.square.bsl"},
 	}
@@ -174,7 +174,7 @@ func QuotedStringBody() *models.Rule {
 	patterns := []*models.Rule{
 		{
 			Name:  "constant.character.escape.bsl",
-			Match: `""`,
+			Match: bslm.EscapedQuote,
 		},
 		{
 			Name:  "comment.line.double-slash.bsl",

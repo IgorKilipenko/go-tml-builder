@@ -33,7 +33,7 @@ func ControlKeywordsRule() *models.Rule {
 	patterns := []*models.Rule{
 		{
 			Name:  "keyword.control.import.bsl",
-			Match: fmt.Sprintf(`(?i)#(%s)(?=[^\wа-яё\.]|$)`, bslm.BslUse),
+			Match: fmt.Sprintf(`(?i)#(%s)(?=%s|$)`, bslm.BslUse, bslm.WordBoundary),
 		},
 		{
 			Name:  "keyword.control.native.bsl",
@@ -41,23 +41,31 @@ func ControlKeywordsRule() *models.Rule {
 		},
 		{
 			Name: "keyword.control.bsl",
-			Match: fmt.Sprintf(`(?i:(?<=[^\wа-яё\.]|^)(%s)(?=[^\wа-яё\.]|$))`,
-				regexputil.ExpressionOrFunc([]bslm.BslKeywords{bslm.BslReturn, bslm.BslContinue, bslm.BslBrake}, nil)),
+			Match: fmt.Sprintf(`(?i:%s(%s)%s)`,
+				bslm.WordBoundaryLookBehind,
+				regexputil.ExpressionOrFunc([]bslm.BslKeywords{bslm.BslReturn, bslm.BslContinue, bslm.BslBrake}, nil),
+				bslm.WordBoundaryLookAhead),
 		},
 		{
 			Name: "keyword.control.conditional.bsl",
-			Match: fmt.Sprintf(`(?i:(?<=[^\wа-яё\.]|^)(%s)(?=[^\wа-яё\.]|$))`,
-				regexputil.ExpressionOrFunc([]bslm.BslKeywords{bslm.BslIf, bslm.BslElse, bslm.BslElseIf, bslm.BslThen, bslm.BslEndIf}, nil)),
+			Match: fmt.Sprintf(`(?i:%s(%s)%s)`,
+				bslm.WordBoundaryLookBehind,
+				regexputil.ExpressionOrFunc([]bslm.BslKeywords{bslm.BslIf, bslm.BslElse, bslm.BslElseIf, bslm.BslThen, bslm.BslEndIf}, nil),
+				bslm.WordBoundaryLookAhead),
 		},
 		{
 			Name: "keyword.control.exception.bsl",
-			Match: fmt.Sprintf(`(?i:(?<=[^\wа-яё\.]|^)(%s)(?=[^\wа-яё\.]|$))`,
-				regexputil.ExpressionOrFunc([]bslm.BslKeywords{bslm.BslTry, bslm.BslCatch, bslm.BslEndTry, bslm.BslException}, nil)),
+			Match: fmt.Sprintf(`(?i:%s(%s)%s)`,
+				bslm.WordBoundaryLookBehind,
+				regexputil.ExpressionOrFunc([]bslm.BslKeywords{bslm.BslTry, bslm.BslCatch, bslm.BslEndTry, bslm.BslException}, nil),
+				bslm.WordBoundaryLookAhead),
 		},
 		{
 			Name: "keyword.control.repeat.bsl",
-			Match: fmt.Sprintf(`(?i:(?<=[^\wа-яё\.]|^)(%s)(?=[^\wа-яё\.]|$))`,
-				regexputil.ExpressionOrFunc([]bslm.BslKeywords{bslm.BslWhile, bslm.BslFor, bslm.BslEach, bslm.BslIn, bslm.BslLoop, bslm.BslEndLoop}, nil)),
+			Match: fmt.Sprintf(`(?i:%s(%s)%s)`,
+				bslm.WordBoundaryLookBehind,
+				regexputil.ExpressionOrFunc([]bslm.BslKeywords{bslm.BslWhile, bslm.BslFor, bslm.BslEach, bslm.BslIn, bslm.BslLoop, bslm.BslEndLoop}, nil),
+				bslm.WordBoundaryLookAhead),
 		},
 	}
 
@@ -97,7 +105,7 @@ func VariableAssignment() *models.Rule {
 	rule := newRule(VariableAssignmentKey(), patterns)
 	rule.Name = "meta.var-single-variable.bsl"
 	rule.Begin = `(?i:(?<=;|^)\s*([\wа-яё]+))\s*(=)`
-	rule.End = `(?i:(?=(;|Иначе|Конец)))`
+	rule.End = bslm.StatementEnd
 	rule.BeginCaptures = map[string]models.Capture{
 		"1": {Name: "variable.assignment.bsl"},
 		"2": {Name: "keyword.operator.assignment.bsl"},
@@ -113,28 +121,28 @@ func FunctionDefinition() *models.Rule {
 		bslm.KeyBasic.IncludeRef(),
 		{
 			Name:  "storage.modifier.bsl",
-			Match: fmt.Sprintf(`(?i:(?<=[^\wа-яё\.]|^)(%s)(?=[^\wа-яё\.]|$))`, bslm.BslVal),
+			Match: fmt.Sprintf(`(?i:%s(%s)%s)`, bslm.WordBoundaryLookBehind, bslm.BslVal, bslm.WordBoundaryLookAhead),
 		},
 		{
 			Name:  "invalid.illegal.bsl",
-			Match: `(?<=[^\wа-яё\.]|^)((?<==)(?i)[a-zа-яё0-9_]+)(?=[^\wа-яё\.]|$)`,
+			Match: fmt.Sprintf(`%s((?<==)(?i)%s)%s`, bslm.WordBoundaryLookBehind, bslm.IdentifierWithCyrillic, bslm.WordBoundaryLookAhead),
 		},
 		{
 			Name:  "invalid.illegal.bsl",
-			Match: `(?<=[^\wа-яё\.]|^)((?<==\s)\s*(?i)[a-zа-яё0-9_]+)(?=[^\wа-яё\.]|$)`,
+			Match: fmt.Sprintf(`%s((?<==\s)\s*(?i)%s)%s`, bslm.WordBoundaryLookBehind, bslm.IdentifierWithCyrillic, bslm.WordBoundaryLookAhead),
 		},
 		bslm.KeyMiscellaneous.IncludeRef(),
 		{Include: "blockEntities"},
 		{
 			Name:  "variable.parameter.bsl",
-			Match: `(?i:[a-zа-яё0-9_]+)`,
+			Match: bslm.IdentifierWithCyrillicCaseInsensitive,
 		},
 	}
 
 	rule := newRule(FunctionDefinitionKey(), patterns)
-	rule.Begin = fmt.Sprintf(`(?i:(%s)\s+)?(%s|%s)\s+([_$[:alpha:]][_$[:alnum:]]*)\s*(\()`,
-		bslm.BslAsync, bslm.BslProcedure, bslm.BslFunction)
-	rule.End = fmt.Sprintf(`(?i:(\))\s*((%s)(?=[^\wа-яё\.]|$))?)`, bslm.BslExport)
+	rule.Begin = fmt.Sprintf(`(?i:(%s)\s+)?(%s|%s)\s+(%s)\s*(\()`,
+		bslm.BslAsync, bslm.BslProcedure, bslm.BslFunction, bslm.Identifier)
+	rule.End = fmt.Sprintf(`(?i:(\))\s*((%s)(?=%s|$))?)`, bslm.BslExport, bslm.WordBoundary)
 	rule.BeginCaptures = map[string]models.Capture{
 		"1": {Name: "storage.modifier.async.bsl"},
 		"2": {Name: "storage.type.bsl"},

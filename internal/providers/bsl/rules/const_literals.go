@@ -16,8 +16,10 @@ func ConstLiterals() *models.Rule {
 	patterns := []*models.Rule{
 		{
 			Name: "constant.language.bsl",
-			Match: fmt.Sprintf(`(?i:(?<=[^\wа-яё\.]|^)(%s)(?=[^\wа-яё\.]|$))`,
-				regexputil.ExpressionOrFunc(bslm.AllConstLiterals(), nil)),
+			Match: fmt.Sprintf(`(?i:%s(%s)%s)`,
+				bslm.WordBoundaryLookBehind,
+				regexputil.ExpressionOrFunc(bslm.AllConstLiterals(), nil),
+				bslm.WordBoundaryLookAhead),
 		},
 	}
 

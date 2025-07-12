@@ -17,23 +17,23 @@ func Basic() *models.Rule {
 		bslm.KeyConstantsLiterals.IncludeRef(),
 		{ // numerics literals
 			Name:  "constant.numeric.bsl",
-			Match: `(?<=[^\wа-яё\.]|^)(\d+\.?\d*)(?=[^\wа-яё\.]|$)`,
+			Match: fmt.Sprintf(`(?<=%s|^)%s(?=%s|$)`, bslm.WordBoundary, bslm.NumericLiteral, bslm.WordBoundary),
 		},
 		{ // date literals, like: '20250101'
 			Name:  "constant.other.date.bsl",
-			Match: `'((\d{4}[^\d']*\d{2}[^\d']*\d{2})([^\d']*\d{2}[^\d']*\d{2}([^\d']*\d{2})?)?)'`,
+			Match: bslm.DateLiteral,
 		},
 		{ // comma like: ,
 			Name:  "keyword.operator.bsl",
-			Match: fmt.Sprintf(`(%s)`, bslm.BslSemicolon),
+			Match: `(,)`,
 		},
 		{ // like: (
 			Name:  "punctuation.bracket.begin.bsl",
-			Match: fmt.Sprintf(`(%s)`, bslm.BslParenOpen),
+			Match: `(\()`,
 		},
 		{ // like: )
 			Name:  "punctuation.bracket.end.bsl",
-			Match: fmt.Sprintf(`(%s)`, bslm.BslParenClose),
+			Match: `(\))`,
 		},
 		bslm.KeyExtensionRegions.IncludeRef(),
 	}

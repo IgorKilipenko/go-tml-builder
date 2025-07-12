@@ -186,9 +186,11 @@ go run cmd/tml-builder/main.go
 // Старый подход
 Match: `\b(Если|Тогда|ИначеЕсли|Иначе|КонецЕсли)\b`
 
-// Новый подход
-Match: fmt.Sprintf(`(?i:(?<=[^\wа-яё\.]|^)(%s)(?=[^\wа-яё\.]|$))`,
-    regexputil.ExpressionOrFunc(bslm.AllControlKeywords(), nil))
+// Новый подход с константами
+Match: fmt.Sprintf(`(?i:%s(%s)%s)`,
+    bslm.WordBoundaryLookBehind,
+    regexputil.ExpressionOrFunc(bslm.AllControlKeywords(), nil),
+    bslm.WordBoundaryLookAhead)
 ```
 
 **Преимущества:**
@@ -196,6 +198,32 @@ Match: fmt.Sprintf(`(?i:(?<=[^\wа-яё\.]|^)(%s)(?=[^\wа-яё\.]|$))`,
 - Автоматическое обновление при изменении ключевых слов
 - Меньше ошибок и опечаток
 - Лучшая читаемость и поддерживаемость кода
+
+### Константы регулярных выражений
+
+Для улучшения читаемости и поддерживаемости кода, часто используемые **сложные** паттерны регулярных выражений вынесены в константы в файле `internal/providers/bsl/models/regex_patterns.go`.
+
+**Принцип:** Выносим в константы только сложные паттерны, которые часто повторяются и могут меняться. Простые символы (`^`, `$`, `"`, `//`, `,`, `;`, `=`, `?`, `%` и т.д.) используются напрямую для лучшей читаемости.
+
+**Основные категории констант:**
+- **Границы слов**: `WordBoundary`, `WordBoundaryLookBehind`, `WordBoundaryLookAhead`
+- **Идентификаторы**: `Identifier`, `IdentifierWithCyrillic`, `IdentifierWithCyrillicCaseInsensitive`
+- **Литералы**: `NumericLiteral`, `DateLiteral`, `EscapedQuote`
+- **Специальные паттерны**: `StatementEnd`, `CaseInsensitiveWordBoundary`
+
+**Пример использования:**
+```go
+// Старый подход
+Match: `(?i:(?<=[^\wа-яё\.]|^)(Если)(?=[^\wа-яё\.]|$))`
+Begin: `(?i:(?<=;|^)\s*(Если))`
+
+// Новый подход - только для сложных паттернов
+Match: fmt.Sprintf(`(?i:%s(%s)%s)`, 
+    bslm.WordBoundaryLookBehind, "Если", bslm.WordBoundaryLookAhead)
+Begin: `(?i:(?<=;|^)\s*(Если))`  // Простые символы напрямую
+```
+
+Подробная документация по константам доступна в [docs/regex_patterns_constants.md](docs/regex_patterns_constants.md).
 
 ## Разработка
 
@@ -242,9 +270,23 @@ go run examples/dynamic_regex_example.go
 - Операторов сравнения и арифметики
 - Констант языка
 
+### Константы регулярных выражений
+
+Запустите пример для демонстрации всех доступных констант:
+
+```bash
+go run examples/regex_patterns_demo.go
+```
+
+Этот пример показывает:
+- Все доступные константы и их значения
+- Примеры использования в контексте
+- Шаблоны для часто используемых конструкций
+
 ### Документация
 
-Подробная документация по подходу к динамическим регулярным выражениям находится в файле `docs/dynamic_regex_approach.md`.
+- Подробная документация по подходу к динамическим регулярным выражениям находится в файле `docs/dynamic_regex_approach.md`
+- Документация по константам регулярных выражений находится в файле `docs/regex_patterns_constants.md`
 
 ## Тестирование
 

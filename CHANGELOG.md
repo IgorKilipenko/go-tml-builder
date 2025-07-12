@@ -1,5 +1,49 @@
 # Changelog
 
+## [1.2.0] - 2024-12-19
+
+### Добавлено
+- **Константы регулярных выражений** для улучшения читаемости и поддерживаемости
+- Новый файл `internal/providers/bsl/models/regex_patterns.go` с константами
+- Примеры использования констант в `examples/regex_patterns_demo.go`
+- Документация по константам в `docs/regex_patterns_constants.md`
+
+### Изменено
+- **Обновлены все файлы правил** для использования констант регулярных выражений:
+  - `internal/providers/bsl/rules/control_flow.go` - использование `WordBoundaryLookBehind`, `WordBoundaryLookAhead`
+  - `internal/providers/bsl/rules/variables.go` - использование `IdentifierWithCyrillic`
+  - `internal/providers/bsl/rules/rules.go` - использование `NumericLiteral`, `DateLiteral`
+  - `internal/providers/bsl/rules/const_literals.go` - использование `WordBoundaryLookBehind`
+  - `internal/providers/bsl/rules/new_objects.go` - использование `Identifier`
+  - `internal/providers/bsl/rules/blocks.go` - использование `Identifier`, `EscapedQuote`
+- **Обновлен README.md** с описанием констант и примерами использования
+
+### Улучшения
+- **Повышенная читаемость**: сложные паттерны стали понятными благодаря именованным константам
+- **Лучшая поддерживаемость**: изменения в сложных паттернах нужно делать только в одном месте
+- **Консистентность**: все правила используют одинаковые сложные паттерны через константы
+- **Меньше ошибок**: исключена возможность опечаток в сложных регулярных выражениях
+- **Баланс**: простые символы остаются читаемыми, сложные - вынесены в константы
+
+### Категории констант
+- **Границы слов**: `WordBoundary`, `WordBoundaryLookBehind`, `WordBoundaryLookAhead`
+- **Идентификаторы**: `Identifier`, `IdentifierWithCyrillic`, `IdentifierWithCyrillicCaseInsensitive`
+- **Литералы**: `NumericLiteral`, `DateLiteral`, `EscapedQuote`
+- **Специальные паттерны**: `StatementEnd`, `CaseInsensitiveWordBoundary`
+- **Шаблоны**: `WordBoundaryTemplate`, `CaseInsensitiveWordBoundaryTemplate`
+
+### Примеры изменений
+```go
+// Было:
+Match: `(?i:(?<=[^\wа-яё\.]|^)(Если)(?=[^\wа-яё\.]|$))`
+Begin: `(?i:(?<=;|^)\s*(Если))`
+
+// Стало:
+Match: fmt.Sprintf(`(?i:%s(%s)%s)`, 
+    bslm.WordBoundaryLookBehind, "Если", bslm.WordBoundaryLookAhead)
+Begin: `(?i:(?<=;|^)\s*(Если))`  // Простые символы напрямую
+```
+
 ## [1.1.0] - 2024-12-19
 
 ### Добавлено
