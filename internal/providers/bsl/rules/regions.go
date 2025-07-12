@@ -34,7 +34,7 @@ func MainRegionStart() *models.Rule {
 	}
 
 	rule := newRule(MainRegionStartKey(), patterns)
-	rule.Begin = `(?i)(#(Область))(?:\\s+([\\wа-яёА-ЯЁ]+))?`
+	rule.Begin = `(?i)(#(Область))(?:\s+([\wа-яёА-ЯЁ]+))?`
 	rule.End = `$`
 	rule.BeginCaptures = map[string]models.Capture{
 		"1": {Name: "keyword.other.section.bsl"},
@@ -51,7 +51,7 @@ func MainRegionEnd() *models.Rule {
 	}
 
 	rule := newRule(MainRegionEndKey(), patterns)
-	rule.Match = `(?i)(#(КонецОбласти))(?:(\\s+//\\s*)([\\wа-яёА-ЯЁ]+)?)?`
+	rule.Match = `(?i)(#(КонецОбласти))(?:(\s+//\s*)([\wа-яёА-ЯЁ]+)?)?`
 	rule.Captures = map[string]models.Capture{
 		"1": {Name: "keyword.other.section.bsl"},
 		"3": {Name: "comment.line.double-slash.bsl"},

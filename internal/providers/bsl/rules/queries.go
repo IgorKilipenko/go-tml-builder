@@ -36,9 +36,9 @@ func Query() *models.Rule {
 	}
 
 	rule := newRule(QueryKey(), patterns)
-	rule.Begin = fmt.Sprintf(`(?i)(?<=[^\\wа-яё\\.]|^)(%s(\\s+%s)?(\\s+%s)?(\\s+%s)?)(?=[^\\wа-яё\\.]|$)`,
+	rule.Begin = fmt.Sprintf(`(?i)(?<=[^\wа-яё\.]|^)(%s(\s+%s)?(\s+%s)?(\s+%s)?)(?=[^\wа-яё\.]|$)`,
 		bslm.BslSelect, bslm.BslAllowed, bslm.BslDistinct, bslm.BslFirst)
-	rule.End = `(?=\\"[^\\"])`
+	rule.End = `(?=\"[^\"])`
 	rule.BeginCaptures = map[string]models.Capture{
 		"1": {Name: "keyword.control.sdbl"},
 	}

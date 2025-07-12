@@ -60,7 +60,7 @@ func BlockEntities() *models.Rule {
 func BlockVariables() *models.Rule {
 	patterns := []*models.Rule{
 		{
-			Match: fmt.Sprintf(`\b(%s)\b(?=[\s*\[]?)(?![\\(])`, bslm.Identifier),
+			Match: fmt.Sprintf(`\b(%s)\b(?=[\s*\[]?)(?![\(])`, bslm.Identifier),
 			Captures: map[string]models.Capture{
 				"1": {Name: "variable.other.readwrite.bsl, entity.name.variable.bsl"},
 			},

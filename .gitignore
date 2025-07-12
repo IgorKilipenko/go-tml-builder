@@ -1,1 +1,3 @@
 **/*.tmLanguage.json
+!cmd/**/*.tmLanguage.json
+!old_tml/*

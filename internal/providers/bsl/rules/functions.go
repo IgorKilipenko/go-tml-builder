@@ -24,7 +24,7 @@ func CallSupportFunctions() *models.Rule {
 	patterns := []*models.Rule{
 		{
 			Name: "support.function.bsl",
-			Match: fmt.Sprintf("(?x)(?i:(?<=[^\\wа-яё\\.]|^)(%s)\\s*(?=\\())",
+			Match: fmt.Sprintf(`(?x)(?i:(?<=[^\wа-яё\.]|^)(%s)\s*(?=\())`,
 				regexputil.ExpressionOrFunc(AllSupportFunctionsNames(), nil)),
 		},
 	}
