@@ -29,7 +29,7 @@ func Basic() *models.Rule {
 			Name:  "punctuation.bracket.begin.bsl",
 			Match: `(\()`,
 		},
-		{ // like: (
+		{ // like: )
 			Name:  "punctuation.bracket.end.bsl",
 			Match: `(\))`,
 		},
@@ -44,18 +44,10 @@ func Miscellaneous() *models.Rule {
 		SupportOperatorsKey().IncludeRef(),
 		ObjectDefinitionKey().IncludeRef(),
 		CallSupportFunctionsKey().IncludeRef(),
-		{
-			Include: "supportEnums",
-		},
-		{
-			Include: "supportClasses",
-		},
-		{
-			Include: "supportValueTypes",
-		},
-		{
-			Include: "supportLanguageConstant",
-		},
+		SupportEnumsKey().IncludeRef(),
+		SupportClassesKey().IncludeRef(),
+		SupportValueTypesKey().IncludeRef(),
+		SupportLanguageConstantKey().IncludeRef(),
 	}
 
 	return newRule(bslm.KeyMiscellaneous, patterns)

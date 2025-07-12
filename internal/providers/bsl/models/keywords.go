@@ -30,7 +30,25 @@ const (
 	BslCatch     BslKeywords = "Исключение"
 	BslEndTry    BslKeywords = "КонецПопытки"
 	BslException BslKeywords = "ВызватьИсключение"
+
+	// Function keywords
+	BslProcedure BslKeywords = "Процедура"
+	BslFunction  BslKeywords = "Функция"
+	BslEndProc   BslKeywords = "КонецПроцедуры"
+	BslEndFunc   BslKeywords = "КонецФункции"
+	BslVal       BslKeywords = "Знач"
+
+	// Import and directives
+	BslUse       BslKeywords = "Использовать"
+	BslNative    BslKeywords = "native"
+	BslOnClient  BslKeywords = "НаКлиенте"
+	BslOnServer  BslKeywords = "НаСервере"
+	BslNoContext BslKeywords = "БезКонтекста"
 )
+
+func (k BslKeywords) String() string {
+	return string(k)
+}
 
 type BslConstants string
 
@@ -51,6 +69,39 @@ func AllConstLiterals() []BslConstants {
 		BslNull,
 		BslTrue,
 		BslFalse,
+	}
+}
+
+func AllControlKeywords() []BslKeywords {
+	return []BslKeywords{
+		BslReturn,
+		BslContinue,
+		BslBrake,
+		BslIf,
+		BslElse,
+		BslElseIf,
+		BslТогда,
+		BslEndIf,
+		BslFor,
+		BslEach,
+		BslIn,
+		BslLoop,
+		BslEndLoop,
+		BslWhile,
+		BslTry,
+		BslCatch,
+		BslEndTry,
+		BslException,
+	}
+}
+
+func AllFunctionKeywords() []BslKeywords {
+	return []BslKeywords{
+		BslProcedure,
+		BslFunction,
+		BslEndProc,
+		BslEndFunc,
+		BslVal,
 	}
 }
 
@@ -151,6 +202,21 @@ const (
 
 func (k BslUniversalTypes) String() string {
 	return string(k)
+}
+
+func AllUniversalTypes() []BslUniversalTypes {
+	return []BslUniversalTypes{
+		BslStr,
+		BslDate,
+		BslStruct,
+		BslFixedStruct,
+		BslArr,
+		BslFixedArr,
+		BslMap,
+		BslFixedMap,
+		BslTree,
+		BslValTable,
+	}
 }
 
 type BslModelTypes string

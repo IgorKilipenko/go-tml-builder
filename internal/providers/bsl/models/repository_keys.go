@@ -28,4 +28,47 @@ const (
 
 	// Functions
 	KeyCallSupportFunctions models.RepositoryKey = "supportFunctions" // Вызов глобальных предопределенных функций
+
+	// Control flow
+	KeyControlKeywords    models.RepositoryKey = "controlKeywords"
+	KeyConditional        models.RepositoryKey = "conditional"
+	KeyVariableAssignment models.RepositoryKey = "variableAssignment"
+	KeyFunctionDefinition models.RepositoryKey = "functionDefinition"
+	KeyFunctionEnd        models.RepositoryKey = "functionEnd"
+
+	// Variables and types
+	KeyVariableDefinition models.RepositoryKey = "variableDefinition"
+	KeyStorageModifiers   models.RepositoryKey = "storageModifiers"
+	KeyAnnotations        models.RepositoryKey = "annotations"
+
+	// Block entities
+	KeyBlockEntities         models.RepositoryKey = "blockEntities"
+	KeyBlockVariables        models.RepositoryKey = "blockVariables"
+	KeyBlockFunctions        models.RepositoryKey = "blockFunctions"
+	KeyBlockObjectProperties models.RepositoryKey = "blockObjectProperties"
+	KeyArrayLiteral          models.RepositoryKey = "arrayLiteral"
+	KeyBlockAwait            models.RepositoryKey = "blockAwait"
+
+	// Support types
+	KeySupportEnums            models.RepositoryKey = "supportEnums"
+	KeySupportClasses          models.RepositoryKey = "supportClasses"
+	KeySupportValueTypes       models.RepositoryKey = "supportValueTypes"
+	KeySupportLanguageConstant models.RepositoryKey = "supportLanguageConstant"
+	KeySupportRegisterTable    models.RepositoryKey = "supportRegisterTable"
+
+	// String patterns
+	KeyQuotedStringBody       models.RepositoryKey = "quotedStringBody"
+	KeyStringPatternParameter models.RepositoryKey = "stringPatternParameter"
+	KeyStringInnerSupports    models.RepositoryKey = "_stringInnerSupports"
+
+	// Regions
+	KeyMainRegion      models.RepositoryKey = "mainRegion"
+	KeyMainRegionStart models.RepositoryKey = "mainRegionStart"
+	KeyMainRegionEnd   models.RepositoryKey = "mainRegionEnd"
+
+	// Documentation
+	KeyDocParametersBlock     models.RepositoryKey = "docParametersBlock"
+	KeyDocReturnsBlock        models.RepositoryKey = "docReturnsBlock"
+	KeyDocParametersBlockArgs models.RepositoryKey = "_docParametersBlockArgs"
+	KeyDocReturnsBlockArgs    models.RepositoryKey = "_docReturnsBlockArgs"
 )

@@ -17,10 +17,6 @@ func DeveloperCommentLineKey() models.RepositoryKey {
 	return bslm.KeyDeveloperCommentLine
 }
 
-func FunctionDocumentationKey() models.RepositoryKey {
-	return bslm.KeyFunctionDocumentation
-}
-
 // CommentLine правила для однострочных комментариев вида: // ...
 func CommentLine() *models.Rule {
 	patterns := []*models.Rule{
@@ -37,7 +33,7 @@ func CommentLine() *models.Rule {
 // CommentCommentBlockLine правила для последовательно идущих однострочных комментариев вида: // ...\n // ...
 func CommentBlock() *models.Rule {
 	patterns := []*models.Rule{
-		FunctionDocumentationKey().IncludeRef(),
+		bslm.KeyFunctionDocumentation.IncludeRef(),
 		{
 			Match: `^\s*(//\s*)(Устарела)(\.\s*.*)\s*$`,
 			Captures: map[string]models.Capture{
@@ -62,7 +58,6 @@ func DeveloperCommentLine() *models.Rule {
 	scopeCommentLineDevelop := "comment.line.developer.bsl"
 
 	patterns := []*models.Rule{
-		DeveloperCommentLineKey().IncludeRef(),
 		{
 			Match: `\s*(//\s*(?:->{3}|<{3}-)\s+.*)$`,
 			Captures: map[string]models.Capture{
@@ -89,5 +84,5 @@ func DeveloperCommentLine() *models.Rule {
 		},
 	}
 
-	return newRule(FunctionDocumentationKey(), patterns)
+	return newRule(DeveloperCommentLineKey(), patterns)
 }
