@@ -1,6 +1,8 @@
 package rules
 
 import (
+	"fmt"
+
 	"github.com/IgorKilipenko/go-tml-builder/internal/core/models"
 	bslm "github.com/IgorKilipenko/go-tml-builder/internal/providers/bsl/models"
 )
@@ -23,15 +25,15 @@ func Basic() *models.Rule {
 		},
 		{ // comma like: ,
 			Name:  "keyword.operator.bsl",
-			Match: `(,)`,
+			Match: fmt.Sprintf(`(%s)`, bslm.BslSemicolon),
 		},
 		{ // like: (
 			Name:  "punctuation.bracket.begin.bsl",
-			Match: `(\()`,
+			Match: fmt.Sprintf(`(%s)`, bslm.BslParenOpen),
 		},
 		{ // like: )
 			Name:  "punctuation.bracket.end.bsl",
-			Match: `(\))`,
+			Match: fmt.Sprintf(`(%s)`, bslm.BslParenClose),
 		},
 		bslm.KeyExtensionRegions.IncludeRef(),
 	}

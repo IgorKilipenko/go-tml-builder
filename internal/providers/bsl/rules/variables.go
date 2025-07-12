@@ -24,7 +24,7 @@ func VariableDefinition() *models.Rule {
 	patterns := []*models.Rule{
 		{
 			Name:  "keyword.operator.bsl",
-			Match: `(,)`,
+			Match: fmt.Sprintf(`(%s)`, bslm.BslSemicolon),
 		},
 		{
 			Name:  "storage.modifier.bsl",
@@ -34,7 +34,7 @@ func VariableDefinition() *models.Rule {
 
 	rule := newRule(VariableDefinitionKey(), patterns)
 	rule.Begin = fmt.Sprintf(`(?i:(?<=[^\wа-яё\.]|^)(%s)\s+([a-zа-яё0-9_]+)\s*)`, bslm.BslVar)
-	rule.End = `(;)`
+	rule.End = fmt.Sprintf(`(%s)`, bslm.BslSemicolon)
 	rule.BeginCaptures = map[string]models.Capture{
 		"1": {Name: "storage.type.var.bsl"},
 		"2": {Name: "variable.bsl"},
@@ -68,7 +68,7 @@ func Annotations() *models.Rule {
 				"1": {Name: "storage.type.annotation.bsl"},
 				"3": {Name: "punctuation.bracket.begin.bsl"},
 			},
-			End: `(\))`,
+			End: fmt.Sprintf(`(%s)`, bslm.BslParenClose),
 			EndCaptures: map[string]models.Capture{
 				"1": {Name: "punctuation.bracket.end.bsl"},
 			},
@@ -76,7 +76,7 @@ func Annotations() *models.Rule {
 				bslm.KeyBasic.IncludeRef(),
 				{
 					Name:  "keyword.operator.assignment.bsl",
-					Match: `(=)`,
+					Match: fmt.Sprintf(`(%s)`, bslm.BslEqual),
 				},
 				{
 					Name:  "invalid.illegal.bsl",

@@ -11,33 +11,29 @@ func ObjectDefinitionKey() models.RepositoryKey {
 	return bslm.KeyObjectDefinition
 }
 
-// ObjectDefinition правила для вызова конструктора: Новый Структура, Новый Соответствие...
 func ObjectDefinition() *models.Rule {
-	newKeyword := bslm.BslNew
-	basePattern := fmt.Sprintf(`(?i:(%s))\s+([_$[:alpha:]][_$[:alnum:]]*\b)`, newKeyword)
-
 	patterns := []*models.Rule{
 		{
-			Match: basePattern,
+			Match: fmt.Sprintf(`(?i:(%s)\\s+)([_$[:alpha:]][_$[:alnum:]]*\\b)`, bslm.BslNew),
 			Captures: map[string]models.Capture{
-				"1": {Name: "keyword.operator.new.bsl"}, // Новый
-				"2": {Name: "support.class.bsl"},        // Тип
+				"1": {Name: "keyword.operator.new.bsl"},
+				"2": {Name: "support.class.bsl"},
 			},
 		},
 		{
-			Begin: fmt.Sprintf(`%s(?:\s*)(\()\s*`, basePattern),
+			Begin: fmt.Sprintf(`(?i:(%s)\\s+)([_$[:alpha:]][_$[:alnum:]]*\\b)(?:\\s*)(%s)\\s*`, bslm.BslNew, bslm.BslParenOpen),
 			BeginCaptures: map[string]models.Capture{
 				"1": {Name: "keyword.operator.new.bsl"},
 				"2": {Name: "support.class.bsl"},
 				"3": {Name: "punctuation.bracket.begin.bsl"},
 			},
-			End: `\s*(\))`,
+			End: fmt.Sprintf(`\\s*(%s)`, bslm.BslParenClose),
 			EndCaptures: map[string]models.Capture{
 				"1": {Name: "punctuation.bracket.end.bsl"},
 			},
-			Patterns: []*models.Rule{ // TODO: требуется рефакторинг вложенных правил
+			Patterns: []*models.Rule{
 				bslm.KeyMiscellaneous.IncludeRef(),
-				{Include: "blockEntities"}, // TODO: заменить на IncludeRef после реализации
+				{Include: "blockEntities"},
 				bslm.KeyBasic.IncludeRef(),
 			},
 		},

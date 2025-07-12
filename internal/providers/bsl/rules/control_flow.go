@@ -47,7 +47,7 @@ func ControlKeywordsRule() *models.Rule {
 		{
 			Name: "keyword.control.conditional.bsl",
 			Match: fmt.Sprintf(`(?i:(?<=[^\wа-яё\.]|^)(%s)(?=[^\wа-яё\.]|$))`,
-				regexputil.ExpressionOrFunc([]bslm.BslKeywords{bslm.BslIf, bslm.BslElse, bslm.BslElseIf, bslm.BslТогда, bslm.BslEndIf}, nil)),
+				regexputil.ExpressionOrFunc([]bslm.BslKeywords{bslm.BslIf, bslm.BslElse, bslm.BslElseIf, bslm.BslThen, bslm.BslEndIf}, nil)),
 		},
 		{
 			Name: "keyword.control.exception.bsl",
@@ -75,7 +75,7 @@ func Conditional() *models.Rule {
 	rule := newRule(ConditionalKey(), patterns)
 	rule.Name = "meta.conditional.bsl"
 	rule.Begin = fmt.Sprintf(`(?i:(?<=;|^)\s*(%s))`, bslm.BslIf)
-	rule.End = fmt.Sprintf(`(?i:(%s|%s))`, bslm.BslТогда, "Then")
+	rule.End = fmt.Sprintf(`(?i:(%s))`, bslm.BslThen)
 	rule.BeginCaptures = map[string]models.Capture{
 		"1": {Name: "keyword.control.conditional.bsl"},
 	}
@@ -134,7 +134,7 @@ func FunctionDefinition() *models.Rule {
 	rule := newRule(FunctionDefinitionKey(), patterns)
 	rule.Begin = fmt.Sprintf(`(?i:(%s)\s+)?(%s|%s)\s+([_$[:alpha:]][_$[:alnum:]]*)\s*(\()`,
 		bslm.BslAsync, bslm.BslProcedure, bslm.BslFunction)
-	rule.End = fmt.Sprintf(`(?i:(\\))\s*((%s)(?=[^\wа-яё\.]|$))?)`, bslm.BslExport)
+	rule.End = fmt.Sprintf(`(?i:(\))\s*((%s)(?=[^\wа-яё\.]|$))?)`, bslm.BslExport)
 	rule.BeginCaptures = map[string]models.Capture{
 		"1": {Name: "storage.modifier.async.bsl"},
 		"2": {Name: "storage.type.bsl"},
@@ -156,7 +156,7 @@ func FunctionEnd() *models.Rule {
 	}
 
 	rule := newRule(FunctionEndKey(), patterns)
-	rule.Begin = fmt.Sprintf(`(?i)(%s(?:%s|%s))`, "Конец", bslm.BslProcedure, bslm.BslFunction)
+	rule.Begin = fmt.Sprintf(`(?i)(%s|%s)`, bslm.BslEndProc, bslm.BslEndFunc)
 	rule.End = `$`
 	rule.BeginCaptures = map[string]models.Capture{
 		"1": {Name: "storage.type.bsl"},

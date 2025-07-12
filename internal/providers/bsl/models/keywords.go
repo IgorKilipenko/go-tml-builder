@@ -16,7 +16,7 @@ const (
 	BslIf     BslKeywords = "Если"
 	BslElse   BslKeywords = "Иначе"
 	BslElseIf BslKeywords = "ИначеЕсли"
-	BslТогда  BslKeywords = "Then"
+	BslThen   BslKeywords = "Тогда"
 	BslEndIf  BslKeywords = "КонецЕсли"
 
 	BslFor     BslKeywords = "Для"
@@ -80,7 +80,7 @@ func AllControlKeywords() []BslKeywords {
 		BslIf,
 		BslElse,
 		BslElseIf,
-		BslТогда,
+		BslThen,
 		BslEndIf,
 		BslFor,
 		BslEach,

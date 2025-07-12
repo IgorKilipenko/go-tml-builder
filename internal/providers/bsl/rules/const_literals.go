@@ -14,7 +14,7 @@ func ConstLiteralsKey() models.RepositoryKey {
 
 func ConstLiterals() *models.Rule {
 	patterns := []*models.Rule{
-		{ // keyword literals, like: Неопределено
+		{
 			Name: "constant.language.bsl",
 			Match: fmt.Sprintf(`(?i:(?<=[^\wа-яё\.]|^)(%s)(?=[^\wа-яё\.]|$))`,
 				regexputil.ExpressionOrFunc(bslm.AllConstLiterals(), nil)),

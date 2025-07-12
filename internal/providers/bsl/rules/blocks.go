@@ -1,6 +1,8 @@
 package rules
 
 import (
+	"fmt"
+
 	"github.com/IgorKilipenko/go-tml-builder/internal/core/models"
 	bslm "github.com/IgorKilipenko/go-tml-builder/internal/providers/bsl/models"
 )
@@ -72,13 +74,13 @@ func BlockVariables() *models.Rule {
 func BlockFunctions() *models.Rule {
 	patterns := []*models.Rule{
 		{
-			Begin: `(?<!(?i:Новый|New)\s+)(?:\s*(\.)\s*)?\b([_$[:alpha:]][_$[:alnum:]]*\b)(?:\s*)(\()\s*`,
+			Begin: fmt.Sprintf(`(?<!(?i:%s|New)\s+)(?:\s*(\.)\s*)?\b([_$[:alpha:]][_$[:alnum:]]*\b)(?:\s*)(%s)\s*`, bslm.BslNew, bslm.BslParenOpen),
 			BeginCaptures: map[string]models.Capture{
 				"1": {Name: "punctuation.accessor.bsl"},
 				"2": {Name: "entity.name.function.bsl"},
 				"3": {Name: "punctuation.bracket.begin.bsl"},
 			},
-			End: `\s*(\))`,
+			End: fmt.Sprintf(`\s*(%s)`, bslm.BslParenClose),
 			EndCaptures: map[string]models.Capture{
 				"1": {Name: "punctuation.bracket.end.bsl"},
 			},
@@ -124,8 +126,8 @@ func ArrayLiteral() *models.Rule {
 
 	rule := newRule(ArrayLiteralKey(), patterns)
 	rule.Name = "meta.array.literal.bsl"
-	rule.Begin = `\s*(\[)`
-	rule.End = `\]`
+	rule.Begin = fmt.Sprintf(`\s*(%s)`, bslm.BslSquareOpen)
+	rule.End = fmt.Sprintf(`%s`, bslm.BslSquareClose)
 	rule.BeginCaptures = map[string]models.Capture{
 		"1": {Name: "meta.brace.square.bsl"},
 	}
@@ -140,7 +142,7 @@ func ArrayLiteral() *models.Rule {
 func BlockAwait() *models.Rule {
 	patterns := []*models.Rule{
 		{
-			Match: `\b([Жж]дать)\b`,
+			Match: fmt.Sprintf(`(?i)\b(%s)\b`, bslm.BslAwait),
 			Name:  "keyword.control.flow.bsl",
 		},
 	}
