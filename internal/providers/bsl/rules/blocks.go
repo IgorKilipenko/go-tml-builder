@@ -173,6 +173,9 @@ func QuotedString() *models.Rule {
 func QuotedStringBody() *models.Rule {
 	patterns := []*models.Rule{
 		{
+			Include: "query",
+		},
+		{
 			Name:  "constant.character.escape.bsl",
 			Match: bslm.EscapedQuote,
 		},

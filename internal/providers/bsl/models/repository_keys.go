@@ -60,6 +60,7 @@ const (
 	KeyQuotedStringBody       models.RepositoryKey = "quotedStringBody"
 	KeyStringPatternParameter models.RepositoryKey = "stringPatternParameter"
 	KeyStringInnerSupports    models.RepositoryKey = "_stringInnerSupports"
+	KeyQuery                  models.RepositoryKey = "query"
 
 	// Regions
 	KeyMainRegion      models.RepositoryKey = "mainRegion"

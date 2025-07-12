@@ -44,6 +44,12 @@ const (
 	BslOnClient  BslKeywords = "НаКлиенте"
 	BslOnServer  BslKeywords = "НаСервере"
 	BslNoContext BslKeywords = "БезКонтекста"
+
+	// Query keywords
+	BslSelect   BslKeywords = "Выбрать"
+	BslAllowed  BslKeywords = "Разрешенные"
+	BslDistinct BslKeywords = "Различные"
+	BslFirst    BslKeywords = "Первые"
 )
 
 func (k BslKeywords) String() string {

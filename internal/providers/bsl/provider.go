@@ -176,5 +176,9 @@ func (p *BslProvider) GetRepository() models.Repository {
 	rule = bslRules.SupportRegisterTable()
 	repo[rule.Key] = rule
 
+	// Запросы
+	rule = bslRules.Query()
+	repo[rule.Key] = rule
+
 	return repo
 }
