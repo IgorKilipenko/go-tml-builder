@@ -146,16 +146,30 @@
         },
         "expressions": {
             "patterns": [
+                { "include": "#assignment" },
+                { "include": "#ternary" },
+                { "include": "#function-call" },
+                { "include": "#object-creation" },
+                { "include": "#method-call" },
+                { "include": "#property-access" }
+            ]
+        },
+        "assignment": {
+            "patterns": [
                 {
-                    "name": "meta.expression.assignment.bsl",
+                    "name": "meta.assignment.bsl",
                     "match": "([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)\\s*=\\s*([^;]+)",
                     "captures": {
                         "1": { "name": "variable.other.bsl" },
                         "2": { "name": "meta.expression.bsl" }
                     }
-                },
+                }
+            ]
+        },
+        "ternary": {
+            "patterns": [
                 {
-                    "name": "meta.expression.ternary.bsl",
+                    "name": "meta.ternary.bsl",
                     "begin": "\\?\\(",
                     "end": "\\)",
                     "patterns": [
@@ -168,9 +182,13 @@
                         { "include": "#variables" },
                         { "include": "#constants" }
                     ]
-                },
+                }
+            ]
+        },
+        "function-call": {
+            "patterns": [
                 {
-                    "name": "meta.expression.function-call.bsl",
+                    "name": "meta.function-call.bsl",
                     "begin": "\\b([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)\\s*\\(",
                     "end": "\\)",
                     "beginCaptures": {
@@ -187,9 +205,13 @@
                         { "include": "#variables" },
                         { "include": "#constants" }
                     ]
-                },
+                }
+            ]
+        },
+        "object-creation": {
+            "patterns": [
                 {
-                    "name": "meta.expression.object-creation.bsl",
+                    "name": "meta.object-creation.bsl",
                     "begin": "\\b(Новый)\\s+([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)",
                     "end": "(?=\\s|;|,|\\)|\\]|\\}|\\b(КонецЕсли|КонецЦикла|КонецПопытки|КонецФункции|КонецПроцедуры)\\b)",
                     "beginCaptures": {
@@ -213,9 +235,13 @@
                             ]
                         }
                     ]
-                },
+                }
+            ]
+        },
+        "method-call": {
+            "patterns": [
                 {
-                    "name": "meta.expression.method-call.bsl",
+                    "name": "meta.method-call.bsl",
                     "begin": "([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)\\.([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)\\s*\\(",
                     "end": "\\)",
                     "beginCaptures": {
@@ -233,9 +259,13 @@
                         { "include": "#variables" },
                         { "include": "#constants" }
                     ]
-                },
+                }
+            ]
+        },
+        "property-access": {
+            "patterns": [
                 {
-                    "name": "meta.expression.property-access.bsl",
+                    "name": "meta.property-access.bsl",
                     "match": "([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)\\.([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)(?!\\s*\\()",
                     "captures": {
                         "1": { "name": "variable.other.bsl" },
