@@ -298,11 +298,21 @@
             "patterns": [
                 {
                     "name": "meta.property-access.bsl",
-                    "match": "([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)\\.([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)(?!\\s*\\()",
-                    "captures": {
+                    "begin": "([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)\\.([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)(?!\\s*\\()",
+                    "end": "(?=\\s|,|;|\\)|\\]|\\}|$)",
+                    "beginCaptures": {
                         "1": { "name": "variable.other.bsl" },
                         "2": { "name": "variable.other.bsl" }
-                    }
+                    },
+                    "patterns": [
+                        {
+                            "name": "meta.property-chain.bsl",
+                            "match": "\\.([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)(?!\\s*\\()",
+                            "captures": {
+                                "1": { "name": "variable.other.bsl" }
+                            }
+                        }
+                    ]
                 }
             ]
         },
@@ -552,8 +562,12 @@
             "patterns": [
                 {
                     "name": "string.quoted.double.bsl",
-                    "begin": "\"",
-                    "end": "\"",
+                    "match": "(?<!\")\"\"(?=[\\s,;])"
+                },
+                {
+                    "name": "string.quoted.double.bsl",
+                    "begin": "(?<!\")\"(?!\")",
+                    "end": "(?<!\")\"(?!\")",
                     "patterns": [
                         {
                             "name": "constant.character.escape.bsl",
@@ -568,9 +582,13 @@
                 },
                 {
                     "name": "string.quoted.single.bsl",
-                    "begin": "'",
-                    "end": "'",
+                    "begin": "(?<!')'(?!')",
+                    "end": "(?<!')'(?!')",
                     "patterns": [
+                        {
+                            "name": "constant.character.escape.bsl",
+                            "match": "''"
+                        },
                         {
                             "name": "constant.character.escape.bsl",
                             "match": "\\\\."
@@ -621,14 +639,16 @@
             ]
         },
         "query": {
+            "begin": "(?=\\s*\\bВЫБРАТЬ\\b)",
+            "end": "(?<!\")(?=\"[^\"]+)",
             "patterns": [
+                { "include": "#query-comments" },
                 { "include": "#query-keywords" },
                 { "include": "#query-expressions" },
                 { "include": "#query-functions" },
                 { "include": "#query-operators" },
                 { "include": "#query-literals" },
-                { "include": "#query-identifiers" },
-                { "include": "#query-comments" }
+                { "include": "#query-identifiers" }
             ]
         },
         "query-keywords": {
@@ -642,28 +662,37 @@
         "query-functions": {
             "patterns": [
                 {
-                    "name": "keyword.other.query-functions.bsl",
-                    "match": "\\b(СУММА|СРЕДНЕЕ|МИНИМУМ|МАКСИМУМ|КОЛИЧЕСТВО|АВТОНОМЕРЗАПИСИ|ВРЕГ|ГОД|ДЕНЬ|ДЕНЬГОДА|ДЕНЬНЕДЕЛИ|ДЛИНАСТРОКИ|ДОБАВИТЬКДАТЕ|ЕСТЬNULL|КВАРТАЛ|КОНЕЦПЕРИОДА|ЛЕВ|МЕСЯЦ|МИНУТА|НАЧАЛОПЕРИОДА|НЕДЕЛЯ|НРЕГ|ОКР|ПОДСТРОКА|ПРАВ|ПРЕДСТАВЛЕНИЕ|РАЗМЕРХРАНИМЫХДАННЫХ|РАЗНОСТЬДАТ|СГРУППИРОВАНОПО|СЕКУНДА|ЭКСП|ЛОГ|ЛОГ10|ПОВ|СКРТ|ВЫБОР|ПОДОБНО|СПЕЦСИМВОЛ|МЕЖДУ|В|ПОДСТРОКА|ВЫРАЗИТЬ|ЗНАЧЕНИЕ|ПУСТАЯТАБЛИЦА|ПРЕДСТАВЛЕНИЕ|ТИП|ТИПЗНАЧЕНИЯ|ССЫЛКА|СТРОКА|ЧИСЛО|ДАТА|ДАТАВРЕМЯ|БУЛЕВО|НЕОПРЕДЕЛЕНО|ИСТИНА|ЛОЖЬ|NULL)\\b"
+                    "name": "meta.query-function.bsl",
+                    "begin": "\\b(СУММА|СРЕДНЕЕ|МИНИМУМ|МАКСИМУМ|КОЛИЧЕСТВО|АВТОНОМЕРЗАПИСИ|ВРЕГ|ГОД|ДЕНЬ|ДЕНЬГОДА|ДЕНЬНЕДЕЛИ|ДЛИНАСТРОКИ|ДОБАВИТЬКДАТЕ|ЕСТЬNULL|КВАРТАЛ|КОНЕЦПЕРИОДА|ЛЕВ|МЕСЯЦ|МИНУТА|НАЧАЛОПЕРИОДА|НЕДЕЛЯ|НРЕГ|ОКР|ПОДСТРОКА|ПРАВ|ПРЕДСТАВЛЕНИЕ|РАЗМЕРХРАНИМЫХДАННЫХ|РАЗНОСТЬДАТ|СГРУППИРОВАНОПО|СЕКУНДА|ЭКСП|ЛОГ|ЛОГ10|ПОВ|СКРТ|ВЫБОР|ПОДОБНО|СПЕЦСИМВОЛ|МЕЖДУ|В|ПОДСТРОКА|ВЫРАЗИТЬ|ЗНАЧЕНИЕ|ПУСТАЯТАБЛИЦА|ПРЕДСТАВЛЕНИЕ|ТИП|ТИПЗНАЧЕНИЯ|ССЫЛКА|СТРОКА|ЧИСЛО|ДАТА|ДАТАВРЕМЯ|БУЛЕВО|НЕОПРЕДЕЛЕНО|ИСТИНА|ЛОЖЬ|NULL)\\s*\\(",
+                    "end": "\\)",
+                    "beginCaptures": {
+                        "0": { "name": "keyword.other.query-functions.bsl" }
+                    },
+                    "patterns": [
+                        { "include": "#query" }
+                    ]
                 }
             ]
         },
         "query-expressions": {
             "patterns": [
                 {
-                    "name": "meta.query-expression.bsl",
-                    "begin": "\\(",
-                    "end": "\\)",
-                    "patterns": [
-                        { "include": "#query" }
-                    ]
-                },
-                {
                     "name": "meta.query-field-access.bsl",
-                    "match": "([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)\\.([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)",
-                    "captures": {
+                    "begin": "([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)\\.([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)",
+                    "end": "(?=\\s|,|;|\\)|\\]|\\}|$)",
+                    "beginCaptures": {
                         "1": { "name": "variable.other.table.bsl" },
                         "2": { "name": "variable.other.field.bsl" }
-                    }
+                    },
+                    "patterns": [
+                        {
+                            "name": "meta.query-field-chain.bsl",
+                            "match": "\\.([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)",
+                            "captures": {
+                                "1": { "name": "variable.other.field.bsl" }
+                            }
+                        }
+                    ]
                 },
                 {
                     "name": "meta.query-parameter.bsl",
@@ -710,8 +739,8 @@
                 },
                 {
                     "name": "string.quoted.double.query.bsl",
-                    "begin": "\"",
-                    "end": "\"",
+                    "begin": "(?<!\")\"(?!\")",
+                    "end": "(?<!\")\"(?!\")",
                     "patterns": [
                         {
                             "name": "constant.character.escape.query.bsl",
