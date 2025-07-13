@@ -194,9 +194,16 @@
         "ternary": {
             "patterns": [
                 {
-                    "name": "meta.ternary.bsl",
+                    "name": "meta.ternary.singleline.bsl",
+                    "match": "\\?\\(([^\n]*)\\)",
+                    "captures": {
+                        "0": { "name": "meta.ternary.bsl" }
+                    }
+                },
+                {
+                    "name": "meta.ternary.multiline.bsl",
                     "begin": "\\?\\(",
-                    "end": "\\)",
+                    "end": "\\)\\s*(;|,|$)",
                     "patterns": [
                         { "include": "#expressions" },
                         { "include": "#keywords" },
