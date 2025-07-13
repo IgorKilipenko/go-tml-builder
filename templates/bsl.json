@@ -21,8 +21,8 @@
                 { "include": "#strings" },
                 { "include": "#literals" },
                 { "include": "#operators" },
-                { "include": "#variables" },
-                { "include": "#constants" }
+                { "include": "#constants" },
+                { "include": "#variables" }
             ]
         },
         "code-block": {
@@ -40,8 +40,8 @@
                 { "include": "#strings" },
                 { "include": "#literals" },
                 { "include": "#operators" },
-                { "include": "#variables" },
-                { "include": "#constants" }
+                { "include": "#constants" },
+                { "include": "#variables" }
             ]
         },
         "comments": {
@@ -155,7 +155,7 @@
             "patterns": [
                 {
                     "name": "meta.function.body.bsl",
-                    "begin": "\\)",
+                    "begin": "(?<=\\))\\s*",
                     "end": "(?=\\b(КонецФункции|КонецПроцедуры)\\b)",
                     "patterns": [
                         { "include": "#code-block" }
@@ -191,13 +191,17 @@
                         "1": { "name": "variable.other.bsl" }
                     },
                     "patterns": [
-                        { "include": "#expressions" },
+                        { "include": "#ternary" },
+                        { "include": "#function-call" },
+                        { "include": "#object-creation" },
+                        { "include": "#method-call" },
+                        { "include": "#property-access" },
                         { "include": "#keywords" },
                         { "include": "#types" },
                         { "include": "#numbers" },
                         { "include": "#strings" },
+                        { "include": "#literals" },
                         { "include": "#operators" },
-                        { "include": "#variables" },
                         { "include": "#constants" }
                     ]
                 }
@@ -250,7 +254,7 @@
                 {
                     "name": "meta.object-creation.bsl",
                     "begin": "\\b(Новый)\\s+([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)",
-                    "end": "(?=\\s|;|,|\\)|\\]|\\}|\\b(КонецЕсли|КонецЦикла|КонецПопытки|КонецФункции|КонецПроцедуры)\\b)",
+                    "end": "(?=\\s|;|,|\\)|\\]|\\})",
                     "beginCaptures": {
                         "1": { "name": "keyword.control.bsl" },
                         "2": { "name": "storage.type.bsl" }
@@ -609,7 +613,7 @@
             "patterns": [
                 {
                     "name": "keyword.operator.bsl",
-                    "match": "(\\+|\\-|\\*|\\/|%|=|<>|<=|>=|<|>|\\.|\\[|\\]|\\(|\\)|:|;|,|\\?|\\()"
+                    "match": "(\\+|\\-|\\*|\\/|%|=|<>|<=|>=|<|>|\\.|\\[|\\]|:|;|,|\\?)"
                 }
             ]
         },
