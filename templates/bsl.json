@@ -8,21 +8,8 @@
     "repository": {
         "module-content": {
             "patterns": [
-                { "include": "#comments" },
-                { "include": "#regions" },
-                { "include": "#directives" },
-                { "include": "#annotations" },
                 { "include": "#function-definition" },
-                { "include": "#control-flow" },
-                { "include": "#expressions" },
-                { "include": "#keywords" },
-                { "include": "#types" },
-                { "include": "#numbers" },
-                { "include": "#strings" },
-                { "include": "#literals" },
-                { "include": "#operators" },
-                { "include": "#constants" },
-                { "include": "#variables" }
+                { "include": "#code-block" }
             ]
         },
         "code-block": {
@@ -31,7 +18,7 @@
                 { "include": "#regions" },
                 { "include": "#directives" },
                 { "include": "#annotations" },
-                { "include": "#function-definition" },
+                { "include": "#function-return" },
                 { "include": "#control-flow" },
                 { "include": "#expressions" },
                 { "include": "#keywords" },
@@ -106,8 +93,7 @@
                     },
                     "patterns": [
                         { "include": "#function-parameters" },
-                        { "include": "#function-body" },
-                        { "include": "#function-return" }
+                        { "include": "#function-body" }
                     ]
                 }
             ]
@@ -161,8 +147,7 @@
                 { "include": "#function-call" },
                 { "include": "#object-creation" },
                 { "include": "#method-call" },
-                { "include": "#property-access" },
-                { "include": "#assignment" }
+                { "include": "#property-access" }
             ]
         },
         "assignment": {
@@ -170,7 +155,7 @@
                 {
                     "name": "meta.assignment.bsl",
                     "begin": "\\b([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)\\s*=\\s*(?!(?:Новый|\\?\\())",
-                    "end": "(?=\\s*;|\\s*$)",
+                    "end": "(?=\\s*(?:;|$))",
                     "beginCaptures": {
                         "1": { "name": "variable.other.bsl" }
                     },
@@ -211,8 +196,8 @@
                         { "include": "#numbers" },
                         { "include": "#strings" },
                         { "include": "#operators" },
-                        { "include": "#variables" },
-                        { "include": "#constants" }
+                        { "include": "#constants" },
+                        { "include": "#variables" }
                     ]
                 }
             ]
@@ -234,8 +219,8 @@
                         { "include": "#numbers" },
                         { "include": "#strings" },
                         { "include": "#operators" },
-                        { "include": "#variables" },
-                        { "include": "#constants" }
+                        { "include": "#constants" },
+                        { "include": "#variables" }
                     ]
                 }
             ]
@@ -247,8 +232,8 @@
                     "begin": "\\b(Новый)\\s+([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)",
                     "end": "(?=\\s|;|,|\\)|\\]|\\})",
                     "beginCaptures": {
-                        "1": { "name": "keyword.control.bsl" },
-                        "2": { "name": "storage.type.bsl" }
+                        "1": { "name": "keyword.operator.new.bsl" },
+                        "2": { "name": "support.class.bsl" }
                     },
                     "patterns": [
                         {
@@ -262,8 +247,8 @@
                                 { "include": "#numbers" },
                                 { "include": "#strings" },
                                 { "include": "#operators" },
-                                { "include": "#variables" },
-                                { "include": "#constants" }
+                                { "include": "#constants" },
+                                { "include": "#variables" }
                             ]
                         }
                     ]
@@ -326,6 +311,7 @@
         },
         "condition-expression": {
             "patterns": [
+                { "include": "#comments" },
                 { "include": "#expressions" },
                 { "include": "#keywords" },
                 { "include": "#types" },
@@ -333,8 +319,7 @@
                 { "include": "#strings" },
                 { "include": "#literals" },
                 { "include": "#operators" },
-                { "include": "#constants" },
-                { "include": "#comments" }
+                { "include": "#constants" }
             ]
         },
         "if-statement": {
@@ -352,11 +337,8 @@
                     "patterns": [
                         {
                             "name": "meta.control-flow.if-condition.bsl",
-                            "begin": "\\bЕсли\\b",
+                            "begin": "(?<=\\bЕсли\\b)",
                             "end": "\\bТогда\\b",
-                            "beginCaptures": {
-                                "0": { "name": "keyword.control.bsl" }
-                            },
                             "endCaptures": {
                                 "0": { "name": "keyword.control.bsl" }
                             },
@@ -399,7 +381,7 @@
             "patterns": [
                 {
                     "name": "meta.control-flow.for.bsl",
-                    "begin": "\\b(Для)\\b",
+                    "begin": "(?=\\b(Для)\\b)",
                     "end": "\\b(КонецЦикла)\\b",
                     "beginCaptures": {
                         "1": { "name": "keyword.control.bsl" }
@@ -436,7 +418,7 @@
             "patterns": [
                 {
                     "name": "meta.control-flow.while.bsl",
-                    "begin": "\\b(Пока)\\b",
+                    "begin": "(?=\\b(Пока)\\b)",
                     "end": "\\b(КонецЦикла)\\b",
                     "beginCaptures": {
                         "1": { "name": "keyword.control.bsl" }
