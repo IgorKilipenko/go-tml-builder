@@ -3,21 +3,47 @@
     "scopeName": "source.bsl",
     "fileTypes": ["bsl", "os"],
     "patterns": [
-        { "include": "#comments" },
-        { "include": "#regions" },
-        { "include": "#directives" },
-        { "include": "#annotations" },
-        { "include": "#function-definition" },
-        { "include": "#control-flow" },
-        { "include": "#keywords" },
-        { "include": "#types" },
-        { "include": "#numbers" },
-        { "include": "#strings" },
-        { "include": "#operators" },
-        { "include": "#variables" },
-        { "include": "#constants" }
+        { "include": "#module-content" }
     ],
     "repository": {
+        "module-content": {
+            "patterns": [
+                { "include": "#comments" },
+                { "include": "#regions" },
+                { "include": "#directives" },
+                { "include": "#annotations" },
+                { "include": "#function-definition" },
+                { "include": "#control-flow" },
+                { "include": "#expressions" },
+                { "include": "#keywords" },
+                { "include": "#types" },
+                { "include": "#numbers" },
+                { "include": "#strings" },
+                { "include": "#literals" },
+                { "include": "#operators" },
+                { "include": "#variables" },
+                { "include": "#constants" }
+            ]
+        },
+        "code-block": {
+            "patterns": [
+                { "include": "#comments" },
+                { "include": "#regions" },
+                { "include": "#directives" },
+                { "include": "#annotations" },
+                { "include": "#function-definition" },
+                { "include": "#control-flow" },
+                { "include": "#expressions" },
+                { "include": "#keywords" },
+                { "include": "#types" },
+                { "include": "#numbers" },
+                { "include": "#strings" },
+                { "include": "#literals" },
+                { "include": "#operators" },
+                { "include": "#variables" },
+                { "include": "#constants" }
+            ]
+        },
         "comments": {
             "patterns": [
                 { "name": "comment.line.double-slash.bsl", "match": "//.*$" }
@@ -42,7 +68,7 @@
                         {
                             "name": "meta.region.body.bsl",
                             "patterns": [
-                                { "include": "$self" }
+                                { "include": "#code-block" }
                             ]
                         }
                     ]
@@ -132,19 +158,7 @@
                     "begin": "\\)",
                     "end": "(?=\\b(КонецФункции|КонецПроцедуры)\\b)",
                     "patterns": [
-                        { "include": "#expressions" },
-                        { "include": "#control-flow" },
-                        { "include": "#keywords" },
-                        { "include": "#types" },
-                        { "include": "#numbers" },
-                        { "include": "#strings" },
-                        { "include": "#operators" },
-                        { "include": "#variables" },
-                        { "include": "#constants" },
-                        { "include": "#comments" },
-                        { "include": "#regions" },
-                        { "include": "#directives" },
-                        { "include": "#annotations" }
+                        { "include": "#code-block" }
                     ]
                 }
             ]
@@ -352,18 +366,7 @@
                         {
                             "name": "meta.control-flow.if-body.bsl",
                             "patterns": [
-                                { "include": "#expressions" },
-                                { "include": "#keywords" },
-                                { "include": "#types" },
-                                { "include": "#numbers" },
-                                { "include": "#strings" },
-                                { "include": "#operators" },
-                                { "include": "#variables" },
-                                { "include": "#constants" },
-                                { "include": "#comments" },
-                                { "include": "#regions" },
-                                { "include": "#directives" },
-                                { "include": "#annotations" }
+                                { "include": "#code-block" }
                             ]
                         }
                     ]
@@ -403,18 +406,7 @@
                         {
                             "name": "meta.control-flow.for-body.bsl",
                             "patterns": [
-                                { "include": "#expressions" },
-                                { "include": "#keywords" },
-                                { "include": "#types" },
-                                { "include": "#numbers" },
-                                { "include": "#strings" },
-                                { "include": "#operators" },
-                                { "include": "#variables" },
-                                { "include": "#constants" },
-                                { "include": "#comments" },
-                                { "include": "#regions" },
-                                { "include": "#directives" },
-                                { "include": "#annotations" }
+                                { "include": "#code-block" }
                             ]
                         }
                     ]
@@ -454,18 +446,7 @@
                         {
                             "name": "meta.control-flow.while-body.bsl",
                             "patterns": [
-                                { "include": "#expressions" },
-                                { "include": "#keywords" },
-                                { "include": "#types" },
-                                { "include": "#numbers" },
-                                { "include": "#strings" },
-                                { "include": "#operators" },
-                                { "include": "#variables" },
-                                { "include": "#constants" },
-                                { "include": "#comments" },
-                                { "include": "#regions" },
-                                { "include": "#directives" },
-                                { "include": "#annotations" }
+                                { "include": "#code-block" }
                             ]
                         }
                     ]
@@ -484,18 +465,7 @@
                         {
                             "name": "meta.control-flow.try-body.bsl",
                             "patterns": [
-                                { "include": "#expressions" },
-                                { "include": "#keywords" },
-                                { "include": "#types" },
-                                { "include": "#numbers" },
-                                { "include": "#strings" },
-                                { "include": "#operators" },
-                                { "include": "#variables" },
-                                { "include": "#constants" },
-                                { "include": "#comments" },
-                                { "include": "#regions" },
-                                { "include": "#directives" },
-                                { "include": "#annotations" }
+                                { "include": "#code-block" }
                             ]
                         },
                         {
@@ -506,18 +476,7 @@
                                 "1": { "name": "keyword.control.bsl" }
                             },
                             "patterns": [
-                                { "include": "#expressions" },
-                                { "include": "#keywords" },
-                                { "include": "#types" },
-                                { "include": "#numbers" },
-                                { "include": "#strings" },
-                                { "include": "#operators" },
-                                { "include": "#variables" },
-                                { "include": "#constants" },
-                                { "include": "#comments" },
-                                { "include": "#regions" },
-                                { "include": "#directives" },
-                                { "include": "#annotations" }
+                                { "include": "#code-block" }
                             ]
                         }
                     ]
@@ -569,8 +528,20 @@
         "numbers": {
             "patterns": [
                 {
-                    "name": "constant.numeric.bsl",
-                    "match": "\\b\\d+(\\.\\d+)?\\b"
+                    "name": "constant.numeric.integer.bsl",
+                    "match": "\\b\\d+\\b"
+                },
+                {
+                    "name": "constant.numeric.float.bsl",
+                    "match": "\\b\\d+\\.\\d+\\b"
+                },
+                {
+                    "name": "constant.numeric.hex.bsl",
+                    "match": "\\b0[xX][0-9a-fA-F]+\\b"
+                },
+                {
+                    "name": "constant.numeric.scientific.bsl",
+                    "match": "\\b\\d+(\\.\\d+)?[eE][+-]?\\d+\\b"
                 }
             ]
         },
@@ -584,6 +555,21 @@
                         {
                             "name": "constant.character.escape.bsl",
                             "match": "\"\""
+                        },
+                        {
+                            "name": "constant.character.escape.bsl",
+                            "match": "\\\\."
+                        }
+                    ]
+                },
+                {
+                    "name": "string.quoted.single.bsl",
+                    "begin": "'",
+                    "end": "'",
+                    "patterns": [
+                        {
+                            "name": "constant.character.escape.bsl",
+                            "match": "\\\\."
                         }
                     ]
                 }
@@ -610,6 +596,22 @@
                 {
                     "name": "constant.language.bsl",
                     "match": "\\b(Истина|Ложь|NULL)\\b"
+                }
+            ]
+        },
+        "literals": {
+            "patterns": [
+                {
+                    "name": "constant.language.date.bsl",
+                    "match": "\\b\\d{1,2}\\.\\d{1,2}\\.\\d{4}\\b"
+                },
+                {
+                    "name": "constant.language.datetime.bsl",
+                    "match": "\\b\\d{1,2}\\.\\d{1,2}\\.\\d{4}\\s+\\d{1,2}:\\d{2}(:\\d{2})?\\b"
+                },
+                {
+                    "name": "constant.language.time.bsl",
+                    "match": "\\b\\d{1,2}:\\d{2}(:\\d{2})?\\b"
                 }
             ]
         }
