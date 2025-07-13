@@ -8,8 +8,12 @@
     "repository": {
         "module-content": {
             "patterns": [
+                { "include": "#comments" },
+                { "include": "#regions" },
+                { "include": "#directives" },
+                { "include": "#annotations" },
                 { "include": "#function-definition" },
-                { "include": "#code-block" }
+                { "include": "#expressions" }
             ]
         },
         "code-block": {
@@ -55,6 +59,7 @@
                         {
                             "name": "meta.region.body.bsl",
                             "patterns": [
+                                { "include": "#function-definition" },
                                 { "include": "#code-block" }
                             ]
                         }
@@ -283,18 +288,18 @@
             "patterns": [
                 {
                     "name": "meta.property-access.bsl",
-                    "begin": "([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)\\.([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)(?!\\s*\\()",
-                    "end": "(?=\\s|,|;|\\)|\\]|\\}|$)",
+                    "begin": "([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)\\s*\\.\\s*([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)(?!\\s*\\()",
+                    "end": "(?=[^А-Яа-яA-Za-z0-9_]|$)",
                     "beginCaptures": {
                         "1": { "name": "variable.other.bsl" },
-                        "2": { "name": "variable.other.bsl" }
+                        "2": { "name": "variable.other.constant.property.bsl" }
                     },
                     "patterns": [
                         {
                             "name": "meta.property-chain.bsl",
-                            "match": "\\.([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)(?!\\s*\\()",
+                            "match": "\\s*\\.\\s*([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)(?!\\s*\\()",
                             "captures": {
-                                "1": { "name": "variable.other.bsl" }
+                                "1": { "name": "variable.other.constant.property.bsl" }
                             }
                         }
                     ]
@@ -381,7 +386,7 @@
             "patterns": [
                 {
                     "name": "meta.control-flow.for.bsl",
-                    "begin": "(?=\\b(Для)\\b)",
+                    "begin": "\\b(Для)\\b",
                     "end": "\\b(КонецЦикла)\\b",
                     "beginCaptures": {
                         "1": { "name": "keyword.control.bsl" }
@@ -392,11 +397,8 @@
                     "patterns": [
                         {
                             "name": "meta.control-flow.for-header.bsl",
-                            "begin": "\\bДля\\b",
+                            "begin": "(?<=\\bДля\\b)",
                             "end": "\\bЦикл\\b",
-                            "beginCaptures": {
-                                "0": { "name": "keyword.control.bsl" }
-                            },
                             "endCaptures": {
                                 "0": { "name": "keyword.control.bsl" }
                             },
@@ -418,7 +420,7 @@
             "patterns": [
                 {
                     "name": "meta.control-flow.while.bsl",
-                    "begin": "(?=\\b(Пока)\\b)",
+                    "begin": "\\b(Пока)\\b",
                     "end": "\\b(КонецЦикла)\\b",
                     "beginCaptures": {
                         "1": { "name": "keyword.control.bsl" }
@@ -429,11 +431,8 @@
                     "patterns": [
                         {
                             "name": "meta.control-flow.while-header.bsl",
-                            "begin": "\\bПока\\b",
+                            "begin": "(?>=\\bПока\\b)",
                             "end": "\\bЦикл\\b",
-                            "beginCaptures": {
-                                "0": { "name": "keyword.control.bsl" }
-                            },
                             "endCaptures": {
                                 "0": { "name": "keyword.control.bsl" }
                             },
