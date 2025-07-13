@@ -57,12 +57,12 @@
                     "end": "(#)(КонецОбласти)",
                     "beginCaptures": {
                         "1": { "name": "keyword.control.directive.bsl" },
-                        "2": { "name": "keyword.control.directive.bsl" },
+                        "2": { "name": "keyword.other.region.bsl" },
                         "3": { "name": "entity.name.region.bsl" }
                     },
                     "endCaptures": {
                         "1": { "name": "keyword.control.directive.bsl" },
-                        "2": { "name": "keyword.control.directive.bsl" }
+                        "2": { "name": "keyword.other.region.bsl" }
                     },
                     "patterns": [
                         {
@@ -98,11 +98,11 @@
                     "begin": "\\b(Функция|Процедура)\\s+([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)\\s*\\(",
                     "end": "\\b(КонецФункции|КонецПроцедуры)\\b",
                     "beginCaptures": {
-                        "1": { "name": "keyword.control.bsl" },
+                        "1": { "name": "keyword.function.bsl" },
                         "2": { "name": "entity.name.function.bsl" }
                     },
                     "endCaptures": {
-                        "1": { "name": "keyword.control.bsl" }
+                        "1": { "name": "keyword.function.bsl" }
                     },
                     "patterns": [
                         { "include": "#function-parameters" },
