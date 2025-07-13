@@ -173,23 +173,33 @@
         },
         "expressions": {
             "patterns": [
-                { "include": "#assignment" },
                 { "include": "#ternary" },
                 { "include": "#function-call" },
                 { "include": "#object-creation" },
                 { "include": "#method-call" },
-                { "include": "#property-access" }
+                { "include": "#property-access" },
+                { "include": "#assignment" }
             ]
         },
         "assignment": {
             "patterns": [
                 {
                     "name": "meta.assignment.bsl",
-                    "match": "([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)\\s*=\\s*([^;]+)",
-                    "captures": {
-                        "1": { "name": "variable.other.bsl" },
-                        "2": { "name": "meta.expression.bsl" }
-                    }
+                    "begin": "\\b([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)\\s*=\\s*(?!(?:Новый|\\?\\())",
+                    "end": "(?=\\s*;|\\s*$)",
+                    "beginCaptures": {
+                        "1": { "name": "variable.other.bsl" }
+                    },
+                    "patterns": [
+                        { "include": "#expressions" },
+                        { "include": "#keywords" },
+                        { "include": "#types" },
+                        { "include": "#numbers" },
+                        { "include": "#strings" },
+                        { "include": "#operators" },
+                        { "include": "#variables" },
+                        { "include": "#constants" }
+                    ]
                 }
             ]
         },
