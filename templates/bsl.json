@@ -95,8 +95,8 @@
             "patterns": [
                 {
                     "name": "meta.function.bsl",
-                    "begin": "\\b(Функция)\\s+([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)\\s*\\(",
-                    "end": "\\b(КонецФункции)\\b",
+                    "begin": "\\b(Функция|Процедура)\\s+([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)\\s*\\(",
+                    "end": "\\b(КонецФункции|КонецПроцедуры)\\b",
                     "beginCaptures": {
                         "1": { "name": "keyword.control.bsl" },
                         "2": { "name": "entity.name.function.bsl" }
@@ -108,22 +108,6 @@
                         { "include": "#function-parameters" },
                         { "include": "#function-body" },
                         { "include": "#function-return" }
-                    ]
-                },
-                {
-                    "name": "meta.procedure.bsl",
-                    "begin": "\\b(Процедура)\\s+([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)\\s*\\(",
-                    "end": "\\b(КонецПроцедуры)\\b",
-                    "beginCaptures": {
-                        "1": { "name": "keyword.control.bsl" },
-                        "2": { "name": "entity.name.function.bsl" }
-                    },
-                    "endCaptures": {
-                        "1": { "name": "keyword.control.bsl" }
-                    },
-                    "patterns": [
-                        { "include": "#function-parameters" },
-                        { "include": "#function-body" }
                     ]
                 }
             ]
@@ -323,6 +307,19 @@
                 { "include": "#try-catch" }
             ]
         },
+        "condition-expression": {
+            "patterns": [
+                { "include": "#expressions" },
+                { "include": "#keywords" },
+                { "include": "#types" },
+                { "include": "#numbers" },
+                { "include": "#strings" },
+                { "include": "#literals" },
+                { "include": "#operators" },
+                { "include": "#constants" },
+                { "include": "#comments" }
+            ]
+        },
         "if-statement": {
             "patterns": [
                 {
@@ -347,14 +344,7 @@
                                 "0": { "name": "keyword.control.bsl" }
                             },
                             "patterns": [
-                                { "include": "#expressions" },
-                                { "include": "#keywords" },
-                                { "include": "#types" },
-                                { "include": "#numbers" },
-                                { "include": "#strings" },
-                                { "include": "#operators" },
-                                { "include": "#variables" },
-                                { "include": "#constants" }
+                                { "include": "#condition-expression" }
                             ]
                         },
                         {
@@ -368,14 +358,7 @@
                                 "0": { "name": "keyword.control.bsl" }
                             },
                             "patterns": [
-                                { "include": "#expressions" },
-                                { "include": "#keywords" },
-                                { "include": "#types" },
-                                { "include": "#numbers" },
-                                { "include": "#strings" },
-                                { "include": "#operators" },
-                                { "include": "#variables" },
-                                { "include": "#constants" }
+                                { "include": "#condition-expression" }
                             ]
                         },
                         {
@@ -419,14 +402,7 @@
                                 "0": { "name": "keyword.control.bsl" }
                             },
                             "patterns": [
-                                { "include": "#expressions" },
-                                { "include": "#keywords" },
-                                { "include": "#types" },
-                                { "include": "#numbers" },
-                                { "include": "#strings" },
-                                { "include": "#operators" },
-                                { "include": "#variables" },
-                                { "include": "#constants" }
+                                { "include": "#condition-expression" }
                             ]
                         },
                         {
@@ -463,14 +439,7 @@
                                 "0": { "name": "keyword.control.bsl" }
                             },
                             "patterns": [
-                                { "include": "#expressions" },
-                                { "include": "#keywords" },
-                                { "include": "#types" },
-                                { "include": "#numbers" },
-                                { "include": "#strings" },
-                                { "include": "#operators" },
-                                { "include": "#variables" },
-                                { "include": "#constants" }
+                                { "include": "#condition-expression" }
                             ]
                         },
                         {
@@ -531,14 +500,7 @@
                                 "1": { "name": "variable.parameter.bsl" }
                             }
                         },
-                        { "include": "#expressions" },
-                        { "include": "#keywords" },
-                        { "include": "#types" },
-                        { "include": "#numbers" },
-                        { "include": "#strings" },
-                        { "include": "#operators" },
-                        { "include": "#variables" },
-                        { "include": "#constants" }
+                        { "include": "#condition-expression" }
                     ]
                 }
             ]
