@@ -8,6 +8,7 @@
         { "include": "#directives" },
         { "include": "#annotations" },
         { "include": "#function-definition" },
+        { "include": "#control-flow" },
         { "include": "#keywords" },
         { "include": "#types" },
         { "include": "#numbers" },
@@ -132,6 +133,7 @@
                     "end": "(?=\\b(КонецФункции|КонецПроцедуры)\\b)",
                     "patterns": [
                         { "include": "#expressions" },
+                        { "include": "#control-flow" },
                         { "include": "#keywords" },
                         { "include": "#types" },
                         { "include": "#numbers" },
@@ -282,6 +284,243 @@
                         "1": { "name": "variable.other.bsl" },
                         "2": { "name": "variable.other.bsl" }
                     }
+                }
+            ]
+        },
+        "control-flow": {
+            "patterns": [
+                {
+                    "name": "meta.control-flow.if.bsl",
+                    "begin": "\\b(Если)\\b",
+                    "end": "\\b(КонецЕсли)\\b",
+                    "beginCaptures": {
+                        "1": { "name": "keyword.control.bsl" }
+                    },
+                    "endCaptures": {
+                        "1": { "name": "keyword.control.bsl" }
+                    },
+                    "patterns": [
+                        {
+                            "name": "meta.control-flow.if-condition.bsl",
+                            "begin": "\\bЕсли\\b",
+                            "end": "\\bТогда\\b",
+                            "beginCaptures": {
+                                "0": { "name": "keyword.control.bsl" }
+                            },
+                            "endCaptures": {
+                                "0": { "name": "keyword.control.bsl" }
+                            },
+                            "patterns": [
+                                { "include": "#expressions" },
+                                { "include": "#keywords" },
+                                { "include": "#types" },
+                                { "include": "#numbers" },
+                                { "include": "#strings" },
+                                { "include": "#operators" },
+                                { "include": "#variables" },
+                                { "include": "#constants" }
+                            ]
+                        },
+                        {
+                            "name": "meta.control-flow.elseif-condition.bsl",
+                            "begin": "\\b(ИначеЕсли)\\b",
+                            "end": "\\bТогда\\b",
+                            "beginCaptures": {
+                                "1": { "name": "keyword.control.bsl" }
+                            },
+                            "endCaptures": {
+                                "0": { "name": "keyword.control.bsl" }
+                            },
+                            "patterns": [
+                                { "include": "#expressions" },
+                                { "include": "#keywords" },
+                                { "include": "#types" },
+                                { "include": "#numbers" },
+                                { "include": "#strings" },
+                                { "include": "#operators" },
+                                { "include": "#variables" },
+                                { "include": "#constants" }
+                            ]
+                        },
+                        {
+                            "name": "meta.control-flow.else.bsl",
+                            "match": "\\b(Иначе)\\b",
+                            "captures": {
+                                "1": { "name": "keyword.control.bsl" }
+                            }
+                        },
+                        {
+                            "name": "meta.control-flow.if-body.bsl",
+                            "patterns": [
+                                { "include": "#expressions" },
+                                { "include": "#keywords" },
+                                { "include": "#types" },
+                                { "include": "#numbers" },
+                                { "include": "#strings" },
+                                { "include": "#operators" },
+                                { "include": "#variables" },
+                                { "include": "#constants" },
+                                { "include": "#comments" },
+                                { "include": "#regions" },
+                                { "include": "#directives" },
+                                { "include": "#annotations" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "meta.control-flow.for.bsl",
+                    "begin": "\\b(Для)\\b",
+                    "end": "\\b(КонецЦикла)\\b",
+                    "beginCaptures": {
+                        "1": { "name": "keyword.control.bsl" }
+                    },
+                    "endCaptures": {
+                        "1": { "name": "keyword.control.bsl" }
+                    },
+                    "patterns": [
+                        {
+                            "name": "meta.control-flow.for-header.bsl",
+                            "begin": "\\bДля\\b",
+                            "end": "\\bЦикл\\b",
+                            "beginCaptures": {
+                                "0": { "name": "keyword.control.bsl" }
+                            },
+                            "endCaptures": {
+                                "0": { "name": "keyword.control.bsl" }
+                            },
+                            "patterns": [
+                                { "include": "#expressions" },
+                                { "include": "#keywords" },
+                                { "include": "#types" },
+                                { "include": "#numbers" },
+                                { "include": "#strings" },
+                                { "include": "#operators" },
+                                { "include": "#variables" },
+                                { "include": "#constants" }
+                            ]
+                        },
+                        {
+                            "name": "meta.control-flow.for-body.bsl",
+                            "patterns": [
+                                { "include": "#expressions" },
+                                { "include": "#keywords" },
+                                { "include": "#types" },
+                                { "include": "#numbers" },
+                                { "include": "#strings" },
+                                { "include": "#operators" },
+                                { "include": "#variables" },
+                                { "include": "#constants" },
+                                { "include": "#comments" },
+                                { "include": "#regions" },
+                                { "include": "#directives" },
+                                { "include": "#annotations" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "meta.control-flow.while.bsl",
+                    "begin": "\\b(Пока)\\b",
+                    "end": "\\b(КонецЦикла)\\b",
+                    "beginCaptures": {
+                        "1": { "name": "keyword.control.bsl" }
+                    },
+                    "endCaptures": {
+                        "1": { "name": "keyword.control.bsl" }
+                    },
+                    "patterns": [
+                        {
+                            "name": "meta.control-flow.while-header.bsl",
+                            "begin": "\\bПока\\b",
+                            "end": "\\bЦикл\\b",
+                            "beginCaptures": {
+                                "0": { "name": "keyword.control.bsl" }
+                            },
+                            "endCaptures": {
+                                "0": { "name": "keyword.control.bsl" }
+                            },
+                            "patterns": [
+                                { "include": "#expressions" },
+                                { "include": "#keywords" },
+                                { "include": "#types" },
+                                { "include": "#numbers" },
+                                { "include": "#strings" },
+                                { "include": "#operators" },
+                                { "include": "#variables" },
+                                { "include": "#constants" }
+                            ]
+                        },
+                        {
+                            "name": "meta.control-flow.while-body.bsl",
+                            "patterns": [
+                                { "include": "#expressions" },
+                                { "include": "#keywords" },
+                                { "include": "#types" },
+                                { "include": "#numbers" },
+                                { "include": "#strings" },
+                                { "include": "#operators" },
+                                { "include": "#variables" },
+                                { "include": "#constants" },
+                                { "include": "#comments" },
+                                { "include": "#regions" },
+                                { "include": "#directives" },
+                                { "include": "#annotations" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "meta.control-flow.try.bsl",
+                    "begin": "\\b(Попытка)\\b",
+                    "end": "\\b(КонецПопытки)\\b",
+                    "beginCaptures": {
+                        "1": { "name": "keyword.control.bsl" }
+                    },
+                    "endCaptures": {
+                        "1": { "name": "keyword.control.bsl" }
+                    },
+                    "patterns": [
+                        {
+                            "name": "meta.control-flow.try-body.bsl",
+                            "patterns": [
+                                { "include": "#expressions" },
+                                { "include": "#keywords" },
+                                { "include": "#types" },
+                                { "include": "#numbers" },
+                                { "include": "#strings" },
+                                { "include": "#operators" },
+                                { "include": "#variables" },
+                                { "include": "#constants" },
+                                { "include": "#comments" },
+                                { "include": "#regions" },
+                                { "include": "#directives" },
+                                { "include": "#annotations" }
+                            ]
+                        },
+                        {
+                            "name": "meta.control-flow.exception.bsl",
+                            "begin": "\\b(Исключение)\\b",
+                            "end": "(?=\\b(КонецПопытки)\\b)",
+                            "beginCaptures": {
+                                "1": { "name": "keyword.control.bsl" }
+                            },
+                            "patterns": [
+                                { "include": "#expressions" },
+                                { "include": "#keywords" },
+                                { "include": "#types" },
+                                { "include": "#numbers" },
+                                { "include": "#strings" },
+                                { "include": "#operators" },
+                                { "include": "#variables" },
+                                { "include": "#constants" },
+                                { "include": "#comments" },
+                                { "include": "#regions" },
+                                { "include": "#directives" },
+                                { "include": "#annotations" }
+                            ]
+                        }
+                    ]
                 }
             ]
         },
