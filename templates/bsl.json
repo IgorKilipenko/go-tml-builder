@@ -303,6 +303,14 @@
         },
         "control-flow": {
             "patterns": [
+                { "include": "#if-statement" },
+                { "include": "#for-loop" },
+                { "include": "#while-loop" },
+                { "include": "#try-catch" }
+            ]
+        },
+        "if-statement": {
+            "patterns": [
                 {
                     "name": "meta.control-flow.if.bsl",
                     "begin": "\\b(Если)\\b",
@@ -370,7 +378,11 @@
                             ]
                         }
                     ]
-                },
+                }
+            ]
+        },
+        "for-loop": {
+            "patterns": [
                 {
                     "name": "meta.control-flow.for.bsl",
                     "begin": "\\b(Для)\\b",
@@ -410,7 +422,11 @@
                             ]
                         }
                     ]
-                },
+                }
+            ]
+        },
+        "while-loop": {
+            "patterns": [
                 {
                     "name": "meta.control-flow.while.bsl",
                     "begin": "\\b(Пока)\\b",
@@ -450,7 +466,11 @@
                             ]
                         }
                     ]
-                },
+                }
+            ]
+        },
+        "try-catch": {
+            "patterns": [
                 {
                     "name": "meta.control-flow.try.bsl",
                     "begin": "\\b(Попытка)\\b",
