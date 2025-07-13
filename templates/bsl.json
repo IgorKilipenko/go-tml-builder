@@ -189,6 +189,32 @@
                     ]
                 },
                 {
+                    "name": "meta.expression.object-creation.bsl",
+                    "begin": "\\b(Новый)\\s+([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)",
+                    "end": "(?=\\s|;|,|\\)|\\]|\\}|\\b(КонецЕсли|КонецЦикла|КонецПопытки|КонецФункции|КонецПроцедуры)\\b)",
+                    "beginCaptures": {
+                        "1": { "name": "keyword.control.bsl" },
+                        "2": { "name": "storage.type.bsl" }
+                    },
+                    "patterns": [
+                        {
+                            "name": "meta.constructor.arguments.bsl",
+                            "begin": "\\(",
+                            "end": "\\)",
+                            "patterns": [
+                                { "include": "#expressions" },
+                                { "include": "#keywords" },
+                                { "include": "#types" },
+                                { "include": "#numbers" },
+                                { "include": "#strings" },
+                                { "include": "#operators" },
+                                { "include": "#variables" },
+                                { "include": "#constants" }
+                            ]
+                        }
+                    ]
+                },
+                {
                     "name": "meta.expression.method-call.bsl",
                     "begin": "([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)\\.([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)\\s*\\(",
                     "end": "\\)",
@@ -207,13 +233,6 @@
                         { "include": "#variables" },
                         { "include": "#constants" }
                     ]
-                },
-                {
-                    "name": "meta.expression.object-creation.bsl",
-                    "match": "Новый\\s+([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)",
-                    "captures": {
-                        "1": { "name": "storage.type.bsl" }
-                    }
                 },
                 {
                     "name": "meta.expression.property-access.bsl",
