@@ -13,7 +13,15 @@
                 { "include": "#directives" },
                 { "include": "#annotations" },
                 { "include": "#function-definition" },
-                { "include": "#expressions" }
+                { "include": "#expressions" },
+                { "include": "#keywords" },
+                { "include": "#types" },
+                { "include": "#numbers" },
+                { "include": "#strings" },
+                { "include": "#literals" },
+                { "include": "#operators" },
+                { "include": "#constants" },
+                { "include": "#variables" }
             ]
         },
         "code-block": {
@@ -153,8 +161,7 @@
                 { "include": "#object-creation" },
                 { "include": "#method-call" },
                 { "include": "#property-access" },
-                { "include": "#variable-definition" },
-                { "include": "#variable-assignment" }
+                { "include": "#variable-definition" }
             ]
         },
         "variable-definition": {
@@ -171,36 +178,6 @@
                         { "include": "#types" },
                         { "include": "#keywords" },
                         { "include": "#constants" }
-                    ]
-                }
-            ]
-        },
-        "variable-assignment": {
-            "patterns": [
-                {
-                    "name": "meta.variable-assignment.bsl",
-                    "begin": "([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)\\s*=\\s*(?!(?:Новый|\\?\\())",
-                    "end": "(?=\\s*;|\\s*$)",
-                    "beginCaptures": {
-                        "1": { "name": "variable.other.bsl" }
-                    },
-                    "patterns": [
-                        {
-                            "name": "meta.property-chain-assignment.bsl",
-                            "match": "\\.([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)(?!\\s*\\()",
-                            "captures": {
-                                "1": { "name": "variable.other.constant.property.bsl" }
-                            }
-                        },
-                        { "include": "#expressions" },
-                        { "include": "#keywords" },
-                        { "include": "#types" },
-                        { "include": "#numbers" },
-                        { "include": "#strings" },
-                        { "include": "#literals" },
-                        { "include": "#operators" },
-                        { "include": "#constants" },
-                        { "include": "#variables" }
                     ]
                 }
             ]
