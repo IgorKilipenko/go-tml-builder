@@ -152,31 +152,55 @@
                 { "include": "#function-call" },
                 { "include": "#object-creation" },
                 { "include": "#method-call" },
-                { "include": "#property-access" }
+                { "include": "#property-access" },
+                { "include": "#variable-definition" },
+                { "include": "#variable-assignment" }
             ]
         },
-        "assignment": {
+        "variable-definition": {
             "patterns": [
                 {
-                    "name": "meta.assignment.bsl",
-                    "begin": "\\b([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)\\s*=\\s*(?!(?:Новый|\\?\\())",
-                    "end": "(?=\\s*(?:;|$))",
+                    "name": "meta.variable-definition.bsl",
+                    "begin": "\\b(Перем)\\s+([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)",
+                    "end": "(?=\\s*;|\\s*$)",
+                    "beginCaptures": {
+                        "1": { "name": "keyword.storage.type.bsl" },
+                        "2": { "name": "variable.other.bsl" }
+                    },
+                    "patterns": [
+                        { "include": "#types" },
+                        { "include": "#keywords" },
+                        { "include": "#constants" }
+                    ]
+                }
+            ]
+        },
+        "variable-assignment": {
+            "patterns": [
+                {
+                    "name": "meta.variable-assignment.bsl",
+                    "begin": "([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)\\s*=\\s*(?!(?:Новый|\\?\\())",
+                    "end": "(?=\\s*;|\\s*$)",
                     "beginCaptures": {
                         "1": { "name": "variable.other.bsl" }
                     },
                     "patterns": [
-                        { "include": "#ternary" },
-                        { "include": "#function-call" },
-                        { "include": "#object-creation" },
-                        { "include": "#method-call" },
-                        { "include": "#property-access" },
+                        {
+                            "name": "meta.property-chain-assignment.bsl",
+                            "match": "\\.([А-Яа-яA-Za-z_][А-Яа-яA-Za-z0-9_]*)(?!\\s*\\()",
+                            "captures": {
+                                "1": { "name": "variable.other.constant.property.bsl" }
+                            }
+                        },
+                        { "include": "#expressions" },
                         { "include": "#keywords" },
                         { "include": "#types" },
                         { "include": "#numbers" },
                         { "include": "#strings" },
                         { "include": "#literals" },
                         { "include": "#operators" },
-                        { "include": "#constants" }
+                        { "include": "#constants" },
+                        { "include": "#variables" }
                     ]
                 }
             ]
